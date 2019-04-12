@@ -26,7 +26,10 @@ public class MasterActivity extends AppCompatActivity {
     public static final String SCREEN_DAY_DISPLAY = "เลือกวันที่";
     public static final String SCREEN_MODIFY_TEACHER_LOCATION_CHOOSER = "รายชื่อครู";
     public static final String HIDE_SETTINGS = "hideSettings";
+    public static final String SCREEN_SETTINGS = "การตั้งค่า";
     public static boolean hideSettings = false;
+    public NavController navController;
+
     NavController.OnDestinationChangedListener listener = new NavController.OnDestinationChangedListener() {
         @Override
         public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
@@ -43,7 +46,7 @@ public class MasterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_master);
 
         NavHostFragment fragment = Objects.requireNonNull((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment));
-        NavController navController = fragment.getNavController();
+        navController = fragment.getNavController();
 
         NavigationUI.setupActionBarWithNavController(this, navController);
         navController.addOnDestinationChangedListener(listener);
@@ -75,8 +78,13 @@ public class MasterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
+                /*
                 Log.w("MasterActivity", "Settings Button Pressed");
-                Snackbar.make(findViewById(android.R.id.content), "ปุ่มตั้งค่าถูกกด", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content), "ปุ่มตั้งค่าถูกกด", Snackbar.LENGTH_SHORT).show();)
+                */
+                Bundle args = new Bundle();
+                args.putString(TAG_SCREEN,SCREEN_SETTINGS);
+                navController.navigate(R.id.settingsFragment);
             default:
                 return super.onOptionsItemSelected(item);
         }
