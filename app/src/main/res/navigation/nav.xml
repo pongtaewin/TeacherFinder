@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_open_timetableView"
             app:destination="@id/dayDisplayFragment" />
+        <action
+            android:id="@+id/action_open_modifyClassroom"
+            app:destination="@id/modifyClassroomFragment" />
     </fragment>
     <fragment
         android:id="@+id/modifyTeacherLocationChooserFragment"
@@ -70,8 +73,14 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="th.ac.sk.timetableapp.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment"
+        tools:layout="@xml/fragment_settings" />
     <action
         android:id="@+id/action_open_settings"
         app:destination="@id/settingsFragment" />
+    <fragment
+        android:id="@+id/modifyClassroomFragment"
+        android:name="th.ac.sk.timetableapp.modify.ModifyClassroomFragment"
+        android:label="fragment_modify_classroom"
+        tools:layout="@layout/fragment_modify_classroom" />
 </navigation>

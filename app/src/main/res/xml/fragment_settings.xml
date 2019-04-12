@@ -11,11 +11,29 @@
             android:icon="@drawable/ic_action_import"
             android:key="import"
             android:summary="ใช้ข้อมูลที่ได้รับจากโทรศัพท์เครื่องอื่น"
-            android:title="นำเข้าข้อมูล" />
+            android:title="นำเข้าข้อมูล"
+            app:fontFamily="@font/kanit" />
         <Preference
             android:icon="@drawable/ic_action_export"
             android:key="export"
             android:summary="ส่งข้อมูลในแอปพลิเคชันไปให้โทรศัพท์เครื่องอื่น"
-            android:title="ส่งออกข้อมูล" />
+            android:title="ส่งออกข้อมูล"
+            app:fontFamily="@font/kanit" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="เปลี่ยนข้อมูล"
+        app:fontFamily="@font/kanit">
+        <Preference
+            android:icon="@drawable/ic_action_delete"
+            android:key="wipe"
+            android:summary="เริ่มกรอกข้อมูลใหม่ทั้งหมด"
+            android:title="ล้างข้อมูล"
+            app:fontFamily="@font/kanit" />
+        <Preference
+            android:icon="@drawable/ic_action_rollback"
+            android:key="rollback"
+            android:summary="สำหรับการทดลองกรอกข้อมูล"
+            android:title="ใช้ข้อมูลทดสอบ"
+            app:fontFamily="@font/kanit" />
     </PreferenceCategory>
 </PreferenceScreen>
