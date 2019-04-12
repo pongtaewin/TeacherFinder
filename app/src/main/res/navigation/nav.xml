@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/dayDisplayFragment"
+        android:name="th.ac.sk.timetableapp.display.DayDisplayFragment"
+        android:label="fragment_day_display"
+        tools:layout="@layout/fragment_day_display">
+        <action
+            android:id="@+id/action_display_period"
+            app:destination="@id/periodDisplayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/periodDisplayFragment"
+        android:name="th.ac.sk.timetableapp.display.PeriodDisplayFragment"
+        android:label="fragment_period_display"
+        tools:layout="@layout/fragment_period_display" >
+        <action
+            android:id="@+id/action_display_teacher_location"
+            app:destination="@id/teacherLocationDisplayFragment" />
+        <argument
+            android:name="day"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="th.ac.sk.timetableapp.display.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <argument android:name="screenTitle"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_open_teacherLocationChooser"
+            app:destination="@id/modifyTeacherLocationChooserFragment" />
+        <action
+            android:id="@+id/action_open_timetableView"
+            app:destination="@id/dayDisplayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/modifyTeacherLocationChooserFragment"
+        android:name="th.ac.sk.timetableapp.modify.ModifyTeacherLocationChooserFragment"
+        android:label="fragment_modify_teacher_location_chooser"
+        tools:layout="@layout/fragment_modify_teacher_location_chooser" >
+        <action
+            android:id="@+id/action_open_teacherLocationEditor"
+            app:destination="@id/modifyTeacherLocationEditorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/modifyTeacherLocationEditorFragment"
+        android:name="th.ac.sk.timetableapp.modify.ModifyTeacherLocationEditorFragment"
+        android:label="fragment_modify_teacher_location_editor"
+        tools:layout="@layout/fragment_modify_teacher_location_editor" >
+        <argument
+            android:name="teacherId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherLocationDisplayFragment"
+        android:name="th.ac.sk.timetableapp.display.TeacherLocationDisplayFragment"
+        android:label="fragment_teacher_location_display"
+        tools:layout="@layout/fragment_teacher_location_display" >
+        <argument
+            android:name="key"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="th.ac.sk.timetableapp.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+    <action
+        android:id="@+id/action_open_settings"
+        app:destination="@id/settingsFragment" />
+</navigation>

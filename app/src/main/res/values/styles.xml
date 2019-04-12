@@ -1,0 +1,43 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="actionBarTheme">
+            @style/ThemeOverlay.MaterialComponents.Dark.ActionBar.Kanit
+        </item>
+        <item name="materialAlertDialogTheme">
+            @style/ThemeOverlay.MaterialComponents.MaterialAlertDialog.Kanit
+        </item>
+    </style>
+
+    <style name="AppTheme.FullScreen" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="materialAlertDialogTheme">
+            @style/ThemeOverlay.MaterialComponents.MaterialAlertDialog.Kanit
+        </item>
+    </style>
+
+    <style name="TextAppearance.MaterialComponents.Caption.Kanit" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/kanit_medium</item>
+    </style>
+
+    <style name="ThemeOverlay.MaterialComponents.Dark.ActionBar.Kanit" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="fontFamily">@font/kanit</item>
+    </style>
+
+    <style name="ThemeOverlay.MaterialComponents.MaterialAlertDialog.Kanit" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:fontFamily">@font/kanit</item>
+    </style>
+
+
+</resources>

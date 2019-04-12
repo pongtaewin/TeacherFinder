@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/classroom"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="ข้อมูลที่ต้องการนำเข้า"
+        android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        app:boxBackgroundMode="outline"
+        app:counterEnabled="false"
+        app:helperText="วางข้อมูลส่งออกที่ได้รับภายในช่องนี้"
+        app:helperTextEnabled="true"
+        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:layout_constraintBottom_toTopOf="@+id/location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/period">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:maxLines="5"
+            android:minLines="5"
+            android:nestedScrollingEnabled="true"
+            android:tag="EditText"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit" />
+    </com.google.android.material.textfield.TextInputLayout>
+</FrameLayout>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/toggle"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/kanit_medium"
+        android:text="ไม่มีคาบเรียน"
+        android:textColor="@android:color/primary_text_light"
+        app:backgroundTint="@color/tintedBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="คาบที่ 1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        app:layout_constraintBottom_toTopOf="@+id/classroom"
+        app:layout_constraintStart_toEndOf="@+id/tag"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/classroom"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:hint="วิชา"
+        android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        app:boxBackgroundMode="outline"
+        app:counterEnabled="true"
+        app:counterMaxLength="80"
+        app:counterOverflowTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:counterTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:errorTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:helperText="กรอกวิชาของคาบ"
+        app:helperTextEnabled="true"
+        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:layout_constraintBottom_toTopOf="@+id/location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/period">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kanit"
+            android:tag="EditText"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/location"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:hint="รหัส"
+        android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:counterOverflowTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:counterTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:errorTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:helperText="กรอกรหัสวิชาของคาบ"
+        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:layout_constraintBottom_toTopOf="@+id/teacherList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/classroom">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kanit"
+            android:tag="EditText"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/teacherList"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:hint="อาจารย์ผู้สอน"
+        android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        app:counterEnabled="true"
+        app:counterMaxLength="250"
+        app:counterOverflowTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:counterTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:errorTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:helperText="กรอกรายชื่ออาจารย์ที่สอนในคาบ"
+        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:layout_constraintBottom_toTopOf="@+id/errorMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kanit"
+            android:tag="EditText"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="กำลังแก้ไข :"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        app:layout_constraintBottom_toBottomOf="@+id/period"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/period" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submit"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/kanit_medium"
+        android:text="ตกลง"
+        android:textColor="@android:color/primary_text_light"
+        app:backgroundTint="@color/colorThemePink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/errorMessage" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/kanit_medium"
+        android:text="กรุณากรอกข้อมูล หรือคลิก ไม่มีคาบเรียน"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/colorError"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teacherList" />
+</androidx.constraintlayout.widget.ConstraintLayout>

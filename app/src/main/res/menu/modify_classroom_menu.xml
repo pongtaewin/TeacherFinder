@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/importData"
+        android:title="นำเข้าข้อมูลตารางสอน"
+        android:titleCondensed="นำเข้า"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/exportData"
+        android:title="ส่งออกข้อมูลตารางสอน"
+        android:titleCondensed="นำเข้า"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/wipeData"
+        android:icon="@drawable/ic_action_delete_white"
+        android:title="ล้างข้อมูลทั้งหมด"
+        android:titleCondensed="ล้างข้อมูล"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/rollbackData"
+        android:title="กลับไปใช้ข้อมูล ม.502"
+        android:titleCondensed="ใช้ข้อมูล ม.502"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="ตั้งค่า"
+        android:titleCondensed="ตั้งค่า"
+        app:showAsAction="always" />
+</menu>
