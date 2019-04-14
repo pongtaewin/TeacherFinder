@@ -8,12 +8,14 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import th.ac.sk.timetableapp.R;
+import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
 import th.ac.sk.timetableapp.datamodel.TeacherDetail;
 import th.ac.sk.timetableapp.datamodel.TeacherLocation;
@@ -21,6 +23,10 @@ import th.ac.sk.timetableapp.datamodel.TeacherLocation;
 public class TeacherLocationDisplayFragment extends Fragment {
     private RecyclerView rv;
     private int key;
+
+    static String getActionBarText(@IntRange(from = 0, to = 49) int key) {
+        return "สถานที่สอน วัน" + new String[]{"จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"}[key / 10] + " คาบ " + String.valueOf((key % 10) + 1);
+    }
 
     @Nullable
     @Override
@@ -33,6 +39,7 @@ public class TeacherLocationDisplayFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
+        DataSaveHandler.loadMaster();
         rv = v.findViewById(R.id.recycler);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(new TeacherListAdapter());

@@ -32,6 +32,7 @@ import th.ac.sk.timetableapp.datamodel.Period;
 public class ModifyClassroomFragment extends Fragment {
     private static ArrayList<ModifyClassroomData> dataList;
     private static ArrayList<ModifyClassroomData> backupDataList;
+    private static RecyclerView rv;
     private static ModifyClassroomAdapter adapter;
 
     private static void onEditConfirmButtonClick(@NonNull ModifyClassroomData data) {
@@ -45,6 +46,7 @@ public class ModifyClassroomFragment extends Fragment {
         backupDataList.set(data.displayPosition, data);
         updateData(data.period, data.position);
         adapter.notifyItemChanged(data.displayPosition);
+        rv.scrollToPosition(data.displayPosition);
     }
 
     private static void onRequestEditButtonClick(@NonNull ModifyClassroomData data) {
@@ -56,6 +58,7 @@ public class ModifyClassroomFragment extends Fragment {
         }
         dataList.set(data.displayPosition, data);
         adapter.notifyItemChanged(data.displayPosition);
+        rv.scrollToPosition(data.displayPosition);
     }
 
     private static void onToggleEditType(@NonNull ModifyClassroomData data) {
@@ -68,11 +71,12 @@ public class ModifyClassroomFragment extends Fragment {
         }
         dataList.set(data.displayPosition, data);
         adapter.notifyItemChanged(data.displayPosition);
+        rv.scrollToPosition(data.displayPosition);
     }
 
     private static void updateData(Period period, int position) {
         PeriodDatabase.getInstance().putToCurrentData(position, period);
-        DataSaveHandler.saveCurrentPeriodData();
+        DataSaveHandler.saveMaster();
     }
 
     private static void importDataFromDatabase() {
@@ -112,7 +116,7 @@ public class ModifyClassroomFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
-        DataSaveHandler.loadCurrentPeriodData();
+        DataSaveHandler.loadMaster();
 
         importDataFromDatabase();
         PeriodDatabase.getInstance().setObserver(this, new Observer<SparseArray<SparseArray<Period>>>() {
@@ -120,7 +124,7 @@ public class ModifyClassroomFragment extends Fragment {
             public void onChanged(SparseArray<SparseArray<Period>> data) { DataSaveHandler.saveCurrentPeriodData();}
         });
 
-        RecyclerView rv = v.findViewById(R.id.recycler);
+        rv = v.findViewById(R.id.recycler);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ModifyClassroomAdapter();
 

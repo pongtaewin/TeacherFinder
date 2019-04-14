@@ -16,7 +16,7 @@ public class DayDisplayActivity extends AppCompatActivity {
         setTitle("กรุณาเลือกวัน");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day_display);
-        DataSaveHandler.loadCurrentPeriodData();
+        DataSaveHandler.loadMaster();
         findViewById(R.id.c1).setOnClickListener(new DayClickListener(1));
         findViewById(R.id.c2).setOnClickListener(new DayClickListener(2));
         findViewById(R.id.c3).setOnClickListener(new DayClickListener(3));

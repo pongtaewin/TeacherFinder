@@ -1,6 +1,5 @@
 package th.ac.sk.timetableapp.display;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -15,10 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import th.ac.sk.timetableapp.MasterActivity;
 import th.ac.sk.timetableapp.R;
+import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.PeriodDatabase;
 import th.ac.sk.timetableapp.datamodel.Period;
 
@@ -26,7 +27,7 @@ public class PeriodDisplayFragment extends Fragment {
     static final String DAY = "day";
     private static ArrayList<Period> dataList;
     @IntRange(from = 1, to = 5)
-    int day;
+    private int day;
 
     private static void importData(@IntRange(from = 1, to = 5) int day) {
         if (day < 0 || day > 5) throw new IllegalArgumentException("day");
@@ -34,6 +35,10 @@ public class PeriodDisplayFragment extends Fragment {
         ArrayList<Period> result = new ArrayList<>();
         for (int i = 0; i < 10; i++) result.add(data.valueAt((10 * (day - 1) + i)));
         dataList = result;
+    }
+
+    static String getActionBarText(@IntRange(from = 1, to = 5) int day) {
+        return "คาบเรียน วัน" + new String[]{"จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"}[day - 1];
     }
 
     @Nullable
@@ -52,16 +57,12 @@ public class PeriodDisplayFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        DataSaveHandler.loadMaster();
         RecyclerView recyclerView = view.findViewById(R.id.grid);
-
         importData(day);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new PeriodDisplayAdapter());
-    }
-
-    static String getActionBarText(@IntRange(from = 1,to = 5) int day) {
-        return "คาบเรียน วัน" + new String[]{"จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"}[day - 1];
     }
 
     private Period getData(int i) {
@@ -194,9 +195,11 @@ public class PeriodDisplayFragment extends Fragment {
             holder.v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), TeacherLocationDisplayActivity.class);
-                    intent.putExtra("period", Integer.parseInt(String.valueOf(period.periodNum)));
-                    startActivity(intent);
+                    Bundle args = new Bundle();
+                    int key = (day - 1) * 10 + period.periodNum - 1;
+                    args.putString(MasterActivity.TAG_SCREEN, TeacherLocationDisplayFragment.getActionBarText(key));
+                    args.putInt("key", key);
+                    Navigation.findNavController(v).navigate(R.id.action_display_teacher_location, args);
                 }
             });
         }

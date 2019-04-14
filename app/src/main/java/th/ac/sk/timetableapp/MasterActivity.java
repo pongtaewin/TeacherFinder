@@ -1,11 +1,8 @@
 package th.ac.sk.timetableapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
@@ -16,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.util.StaticUtil;
 
 public class MasterActivity extends AppCompatActivity {
@@ -27,6 +25,7 @@ public class MasterActivity extends AppCompatActivity {
     public static final String SCREEN_MODIFY_TEACHER_LOCATION_CHOOSER = "รายชื่อครู";
     public static final String HIDE_SETTINGS = "hideSettings";
     public static final String SCREEN_SETTINGS = "การตั้งค่า";
+    public static final String SCREEN_MODIFY_CLASSROOM = "แก้ไขตารางสอน";
     public static boolean hideSettings = false;
     public NavController navController;
 
@@ -44,6 +43,9 @@ public class MasterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
+
+        StaticUtil.getInstance().applyContext(this);
+        DataSaveHandler.getInstance();
 
         NavHostFragment fragment = Objects.requireNonNull((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment));
         navController = fragment.getNavController();
@@ -83,8 +85,10 @@ public class MasterActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(android.R.id.content), "ปุ่มตั้งค่าถูกกด", Snackbar.LENGTH_SHORT).show();)
                 */
                 Bundle args = new Bundle();
-                args.putString(TAG_SCREEN,SCREEN_SETTINGS);
-                navController.navigate(R.id.settingsFragment);
+                args.putString(TAG_SCREEN, SCREEN_SETTINGS);
+                args.putBoolean(HIDE_SETTINGS, true);
+                navController.navigate(R.id.settingsFragment, args);
+
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -92,11 +92,11 @@ public class DataSaveHandler {
         return FileIO.load(DATA_PERIOD);
     }
 
-    public static boolean importPeriodData(String saveData,boolean check) {
+    public static boolean importPeriodData(String saveData, boolean check) {
         boolean success = false;
         try {
             success = PeriodDatabase.checkIfCorrectlyImported(loadPeriod(saveData));
-            if(check){
+            if (check) {
                 savePeriod(saveData);
                 loadCurrentPeriodData();
             }
@@ -232,11 +232,11 @@ public class DataSaveHandler {
         return FileIO.load(DATA_TEACHER_LOCATION);
     }
 
-    public static boolean importTeacherLocationData(String saveData,boolean check) {
+    public static boolean importTeacherLocationData(String saveData, boolean check) {
         boolean success = false;
         try {
             success = TeacherLocationDatabase.checkIfCorrectlyImported(loadTeacherLocation(saveData));
-            if(check){
+            if (check) {
                 saveTeacherLocation(saveData);
                 loadTeacherLocation();
             }
@@ -244,6 +244,16 @@ public class DataSaveHandler {
             e.printStackTrace();
         }
         return success;
+    }
+
+    public static void loadMaster() {
+        loadCurrentPeriodData();
+        loadCurrentTeacherLocationData();
+    }
+
+    public static void saveMaster() {
+        saveCurrentPeriodData();
+        saveCurrentTeacherLocationData();
     }
 
     static class FileIO {

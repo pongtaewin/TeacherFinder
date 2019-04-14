@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import th.ac.sk.timetableapp.MasterActivity;
 import th.ac.sk.timetableapp.R;
+import th.ac.sk.timetableapp.database.DataSaveHandler;
 
 public class DayDisplayFragment extends Fragment {
 
@@ -28,7 +29,7 @@ public class DayDisplayFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-
+        DataSaveHandler.loadMaster();
         v.findViewById(R.id.c1).setOnClickListener(new DayClickListener(1));
         v.findViewById(R.id.c2).setOnClickListener(new DayClickListener(2));
         v.findViewById(R.id.c3).setOnClickListener(new DayClickListener(3));
@@ -46,6 +47,7 @@ public class DayDisplayFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            DataSaveHandler.loadMaster();
             Bundle args = new Bundle();
             args.putInt(PeriodDisplayFragment.DAY, day);
             args.putString(MasterActivity.TAG_SCREEN, PeriodDisplayFragment.getActionBarText(day));

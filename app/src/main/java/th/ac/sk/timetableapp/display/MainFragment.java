@@ -1,6 +1,5 @@
 package th.ac.sk.timetableapp.display;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import th.ac.sk.timetableapp.MasterActivity;
 import th.ac.sk.timetableapp.R;
-import th.ac.sk.timetableapp.modify.ModifyClassroomActivity;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
-import th.ac.sk.timetableapp.util.StaticUtil;
 
 public class MainFragment extends Fragment {
 
@@ -28,8 +25,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        StaticUtil.getInstance().applyContext(getContext());
-        DataSaveHandler.getInstance();
+
+        DataSaveHandler.loadMaster();
         v.findViewById(R.id.c1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +38,9 @@ public class MainFragment extends Fragment {
         v.findViewById(R.id.c2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(requireContext(), ModifyClassroomActivity.class));
+                Bundle args = new Bundle();
+                args.putString(MasterActivity.TAG_SCREEN, MasterActivity.SCREEN_MODIFY_CLASSROOM);
+                Navigation.findNavController(v).navigate(R.id.action_open_modifyClassroom, args);
             }
         });
         v.findViewById(R.id.c3).setOnClickListener(new View.OnClickListener() {

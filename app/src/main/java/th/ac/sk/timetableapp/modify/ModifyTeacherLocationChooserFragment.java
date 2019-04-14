@@ -1,6 +1,7 @@
 package th.ac.sk.timetableapp.modify;
 
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +14,27 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import th.ac.sk.timetableapp.MasterActivity;
 import th.ac.sk.timetableapp.R;
+import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
 import th.ac.sk.timetableapp.datamodel.TeacherDetail;
+import th.ac.sk.timetableapp.datamodel.TeacherLocation;
 import th.ac.sk.timetableapp.util.DialogBuilder;
 
 public class ModifyTeacherLocationChooserFragment extends Fragment {
+    public TeacherChooserAdapter adapter = new TeacherChooserAdapter(this);
     private RecyclerView rv;
     private ExtendedFloatingActionButton addFab;
-    private TeacherChooserAdapter adapter = new TeacherChooserAdapter();
 
     public static void openEditor(NavController navController, int teacherId) {
+        DataSaveHandler.saveMaster();
+        DataSaveHandler.loadMaster();
         TeacherDetail detail = TeacherLocationDatabase.getInstance().getDetail(teacherId);
         Bundle args = new Bundle();
         args.putString(MasterActivity.TAG_SCREEN, String.format("เวลาสอนของอาจารย์ %s %s", detail.name, detail.surname));
@@ -44,7 +50,7 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
-
+        DataSaveHandler.loadMaster();
         rv = v.findViewById(R.id.recycler);
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -61,7 +67,14 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DataSaveHandler.loadMaster();
                 DialogBuilder.getAddTeacherDialog(requireActivity(), Navigation.findNavController(v)).show();
+                adapter.notifyDataSetChanged();
+            }
+        });
+        TeacherLocationDatabase.getInstance().setLocationObserver(getViewLifecycleOwner(), new Observer<SparseArray<SparseArray<TeacherLocation>>>() {
+            @Override
+            public void onChanged(SparseArray<SparseArray<TeacherLocation>> sparseArraySparseArray) {
                 adapter.notifyDataSetChanged();
             }
         });
@@ -73,16 +86,34 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    private class TeacherClickListener implements View.OnClickListener {
-        int teacherId;
+    private static class TeacherListener {
+        private static class Click implements View.OnClickListener {
+            int teacherId;
 
-        TeacherClickListener(int teacherId) {
-            this.teacherId = teacherId;
+            Click(int teacherId) {
+                this.teacherId = teacherId;
+            }
+
+            @Override
+            public void onClick(View v) {
+                openEditor(Navigation.findNavController(v), teacherId);
+            }
         }
 
-        @Override
-        public void onClick(View v) {
-            openEditor(Navigation.findNavController(v), teacherId);
+        private static class LongClick implements View.OnLongClickListener {
+            int teacherId;
+            ModifyTeacherLocationChooserFragment fragment;
+
+            LongClick(int teacherId, ModifyTeacherLocationChooserFragment fragment) {
+                this.teacherId = teacherId;
+                this.fragment = fragment;
+            }
+
+            @Override
+            public boolean onLongClick(View v) {
+                DialogBuilder.getDeleteItemDialog(fragment, TeacherLocationDatabase.getInstance().getDetail(teacherId)).show();
+                return false;
+            }
         }
     }
 
@@ -97,7 +128,12 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
         }
     }
 
-    private class TeacherChooserAdapter extends RecyclerView.Adapter {
+    public class TeacherChooserAdapter extends RecyclerView.Adapter {
+        public ModifyTeacherLocationChooserFragment fragment;
+
+        TeacherChooserAdapter(ModifyTeacherLocationChooserFragment fragment) {
+            this.fragment = fragment;
+        }
 
         @NonNull
         @Override
@@ -110,11 +146,12 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             TeacherChooserViewHolder VH = (TeacherChooserViewHolder) holder;
             TeacherDetail data = TeacherLocationDatabase.getInstance().getDetail().valueAt(position);
+            VH.text.setText(String.format(Locale.getDefault(), "อ. %s %s", data.name, data.surname));
 
             VH.view.setBackgroundColor(getResources().getColor(
                     position % 2 == 0 ? R.color.normalBackground : R.color.tintedBackground));
-            VH.text.setText(String.format(Locale.getDefault(), "อ. %s %s", data.name, data.surname));
-            VH.view.setOnClickListener(new TeacherClickListener(data.id));
+            VH.view.setOnClickListener(new TeacherListener.Click(data.id));
+            VH.view.setOnLongClickListener(new TeacherListener.LongClick(data.id, fragment));
         }
 
         @Override

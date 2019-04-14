@@ -16,13 +16,13 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.ImportExportUtil;
 import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
 import th.ac.sk.timetableapp.datamodel.TeacherDetail;
-import th.ac.sk.timetableapp.modify.ModifyClassroomActivity;
 import th.ac.sk.timetableapp.modify.ModifyTeacherLocationChooserFragment;
 import th.ac.sk.timetableapp.modify.ModifyTeacherLocationEditorActivity;
 
@@ -31,13 +31,14 @@ public abstract class DialogBuilder {
 
     @NonNull
     public static AlertDialog getWipeDataDialog(@NonNull final Activity activity) {
-        return new MaterialAlertDialogBuilder(activity.getApplicationContext(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
+        return new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
                 .setTitle("ต้องการล้างข้อมูลทั้งหมดหรือไม่")
                 .setView(inflateDialogMessage(activity, "ข้อมูลทั้งหมดที่บันทึกไว้จะหายไป"))
                 .setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ((ModifyClassroomActivity) activity).wipeData();
+                        ImportExportUtil.wipeData();
+                        Snackbar.make(activity.findViewById(android.R.id.content), "ล้างข้อมูลสำเร็จ", Snackbar.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
@@ -57,7 +58,8 @@ public abstract class DialogBuilder {
                 .setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ((ModifyClassroomActivity) activity).rollbackData();
+                        ImportExportUtil.rollbackToPlaceholderData();
+                        Snackbar.make(activity.findViewById(android.R.id.content), "ใช้งานข้อมูลทดสอบสำเร็จ", Snackbar.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
@@ -101,6 +103,11 @@ public abstract class DialogBuilder {
     }
 
     @NonNull
+    private static View inflateDialogMessage(@NonNull final Fragment fragment, String s) {
+        return inflateDialogMessage(fragment.requireActivity(), s);
+    }
+
+    @NonNull
     public static AlertDialog getExportDataDialog(@NonNull final Activity activity) {
         return new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
                 .setTitle("ต้องการส่งออกข้อมูลหรือไม่")
@@ -131,11 +138,11 @@ public abstract class DialogBuilder {
                 .setPositiveButton("เรียบร้อย", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        DataSaveHandler.loadMaster();
                         int id = TeacherLocationDatabase.getNewDetailId();
                         TeacherLocationDatabase.getInstance().putDetail(id, new TeacherDetail(id,
                                 Objects.requireNonNull(text.getText()).toString(), Objects.requireNonNull(text2.getText()).toString()));
-                        DataSaveHandler.saveCurrentTeacherLocationData();
-
+                        DataSaveHandler.saveMaster();
                         ModifyTeacherLocationChooserFragment.openEditor(navController, id);
                     }
                 })
@@ -173,5 +180,26 @@ public abstract class DialogBuilder {
                         dialog.dismiss();
                     }
                 }).create();
+    }
+
+    @NonNull
+    public static AlertDialog getDeleteItemDialog(@NonNull final Fragment fragment, final TeacherDetail detail) {
+        return new MaterialAlertDialogBuilder(fragment.requireContext(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
+                .setTitle("ยืนยันการลบข้อมูล")
+                .setView(inflateDialogMessage(fragment, String.format("ข้อมูลของ อ. %s %s จะถูกลบและไม่สามารถกู้คืนกลับมาได้อีก", detail.name, detail.surname)))
+                .setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        TeacherLocationDatabase.getInstance().removeLocation(detail.id);
+                        Snackbar.make(fragment.requireView(), "ลบข้อมูลสำเร็จ", Snackbar.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
     }
 }
