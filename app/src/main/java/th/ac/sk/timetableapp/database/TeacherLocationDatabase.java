@@ -52,7 +52,8 @@ public class TeacherLocationDatabase {
     }
 
     public static int getNewDetailId() {
-        return getInstance().getDetail().size() + 1;
+        SparseArray<TeacherDetail> detail = getInstance().getDetail();
+        return detail.keyAt(detail.size() - 1) + 1;
     }
 
     public void updateToNullLocation() {

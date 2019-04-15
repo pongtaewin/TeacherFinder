@@ -191,6 +191,7 @@ public abstract class DialogBuilder {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         TeacherLocationDatabase.getInstance().removeLocation(detail.id);
+                        TeacherLocationDatabase.getInstance().removeDetail(detail.id);
                         Snackbar.make(fragment.requireView(), "ลบข้อมูลสำเร็จ", Snackbar.LENGTH_LONG).show();
                     }
                 })
