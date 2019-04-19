@@ -16,22 +16,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".display.SplashScreenActivity"
+            android:name=".SplashScreenActivity"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".modify.ModifyTeacherLocationChooserActivity" />
-        <activity android:name=".modify.ModifyTeacherLocationEditorActivity" />
-        <activity android:name=".display.DayDisplayActivity" />
-        <activity android:name=".display.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".display.PeriodDisplayActivity" />
-        <activity android:name=".display.TeacherLocationDisplayActivity" />
-        <activity android:name=".modify.ModifyClassroomActivity" />
-        <activity android:name=".settings.SettingsActivity" />
     </application>
 
 </manifest>

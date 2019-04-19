@@ -8,34 +8,32 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
-import th.ac.sk.timetableapp.util.StaticUtil;
+import th.ac.sk.timetableapp.tool.StaticUtil;
 
 public class MasterActivity extends AppCompatActivity {
 
     public static final String SPLASH_SCREEN_ALREADY = "splashScreenAlready";
-    public static final String TAG_SCREEN = "screenTitle";
-    public static final String SCREEN_MAIN = "หน้าหลัก";
-    public static final String SCREEN_DAY_DISPLAY = "เลือกวันที่";
-    public static final String SCREEN_MODIFY_TEACHER_LOCATION_CHOOSER = "รายชื่อครู";
-    public static final String HIDE_SETTINGS = "hideSettings";
-    public static final String SCREEN_SETTINGS = "การตั้งค่า";
-    public static final String SCREEN_MODIFY_CLASSROOM = "แก้ไขตารางสอน";
     public static boolean hideSettings = false;
     public NavController navController;
 
     NavController.OnDestinationChangedListener listener = new NavController.OnDestinationChangedListener() {
         @Override
         public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-            Objects.requireNonNull(getSupportActionBar())
-                    .setTitle(arguments != null ? arguments.getString(TAG_SCREEN, "แอปพลิเคชัน") : "แอปพลิเคชัน");
+            ActionBar actionBar = Objects.requireNonNull(getSupportActionBar());
+            int id = Objects.requireNonNull(navController.getCurrentDestination()).getId();
+
+            actionBar.setTitle(StaticUtil.getTitleText(id, arguments));
+            actionBar.setSubtitle(StaticUtil.getSubtitleText(id));
             invalidateOptionsMenu();
-            hideSettings = (arguments != null && arguments.getBoolean(HIDE_SETTINGS, false));
+
+            hideSettings = id == R.id.settingsFragment;
         }
     };
 
@@ -80,17 +78,15 @@ public class MasterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                /*
-                Log.w("MasterActivity", "Settings Button Pressed");
-                Snackbar.make(findViewById(android.R.id.content), "ปุ่มตั้งค่าถูกกด", Snackbar.LENGTH_SHORT).show();)
-                */
-                Bundle args = new Bundle();
-                args.putString(TAG_SCREEN, SCREEN_SETTINGS);
-                args.putBoolean(HIDE_SETTINGS, true);
-                navController.navigate(R.id.settingsFragment, args);
-
+                navController.navigate(R.id.settingsFragment);
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        boolean results = navController.popBackStack();
+        if (!results) super.onBackPressed();
     }
 }

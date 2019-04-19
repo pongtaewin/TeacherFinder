@@ -1,13 +1,16 @@
-package th.ac.sk.timetableapp.display;
+package th.ac.sk.timetableapp;
 
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
 import th.ac.sk.timetableapp.R;
 
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import java.util.Objects;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -19,6 +22,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         handler = new Handler();
         runnable = new Runnable() {

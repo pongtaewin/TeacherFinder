@@ -1,7 +1,5 @@
-package th.ac.sk.timetableapp.modify;
+package th.ac.sk.timetableapp.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
@@ -19,26 +17,26 @@ import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import th.ac.sk.timetableapp.R;
-import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
-import th.ac.sk.timetableapp.datamodel.TeacherDetail;
-import th.ac.sk.timetableapp.datamodel.TeacherLocation;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
-import th.ac.sk.timetableapp.util.StaticUtil;
+import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
+import th.ac.sk.timetableapp.model.TeacherDetail;
+import th.ac.sk.timetableapp.model.TeacherLocation;
+import th.ac.sk.timetableapp.tool.StaticUtil;
 
-public class ModifyTeacherLocationEditorActivity extends AppCompatActivity {
-    public static int teacherId;
-    public static ArrayList<ModifyTeacherLocationData> dataList;
-    public static ArrayList<ModifyTeacherLocationData> backupDataList;
-    public static ModifyTeacherLocationAdapter adapter;
-    public TeacherDetail thisTeacherDetail;
-    public Activity thisActivity;
+public class ModifyTeacherLocationEditorFragment extends Fragment {
+    private static int teacherId;
+    private static ArrayList<ModifyTeacherLocationData> dataList;
+    private static ArrayList<ModifyTeacherLocationData> backupDataList;
+    private static ModifyTeacherLocationAdapter adapter;
+    private static RecyclerView rv;
 
-    public static void importDataFromDatabase() {
+    private static void importDataFromDatabase() {
         ArrayList<ModifyTeacherLocationData> input = new ArrayList<>();
         int[] d = {ModifyTeacherLocationData.MON, ModifyTeacherLocationData.TUE, ModifyTeacherLocationData.WED, ModifyTeacherLocationData.THU, ModifyTeacherLocationData.FRI};
         for (int day = 0; day < 5; day++) {
@@ -66,10 +64,12 @@ public class ModifyTeacherLocationEditorActivity extends AppCompatActivity {
     }
 
     private static void onRequestEditButtonClick(ModifyTeacherLocationData data) {
+        DataSaveHandler.loadMaster();
         backupDataList.set(data.displayPosition, data);
         data.type = ModifyTeacherLocationData.VIEW_TYPE_EDIT;
         dataList.set(data.displayPosition, data);
-        adapter.notifyItemChanged(data.displayPosition);
+        getAdapter().notifyItemChanged(data.displayPosition);
+        rv.scrollToPosition(data.displayPosition);
     }
 
     private static void updateData(TeacherLocation location, int position) {
@@ -77,7 +77,7 @@ public class ModifyTeacherLocationEditorActivity extends AppCompatActivity {
             TeacherLocationDatabase.getInstance().removeLocation(teacherId, position);
         else
             TeacherLocationDatabase.getInstance().putLocation(teacherId, position, location);
-        DataSaveHandler.saveCurrentTeacherLocationData();
+        DataSaveHandler.saveMaster();
     }
 
     private static void onEditConfirmButtonClick(@NonNull ModifyTeacherLocationData data) {
@@ -85,36 +85,38 @@ public class ModifyTeacherLocationEditorActivity extends AppCompatActivity {
         dataList.set(data.displayPosition, data);
         backupDataList.set(data.displayPosition, data);
         updateData(data.location, data.position);
-        adapter.notifyItemChanged(data.displayPosition);
+        getAdapter().notifyItemChanged(data.displayPosition);
+        DataSaveHandler.saveMaster();
+        rv.scrollToPosition(data.displayPosition);
+    }
+
+    public static ModifyTeacherLocationAdapter getAdapter() {
+        return adapter;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        teacherId = requireArguments().getInt("teacherId");
+        return inflater.inflate(R.layout.fragment_modify_teacher_location_editor,container,false);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_teacher_location_editor);
-
-        DataSaveHandler.loadCurrentTeacherLocationData();
-        onIntentCheck();
-        thisActivity = this;
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        DataSaveHandler.loadMaster();
         importDataFromDatabase();
         TeacherLocationDatabase.getInstance().setDetailObserver(this, new Observer<SparseArray<TeacherDetail>>() {
             @Override
             public void onChanged(SparseArray<TeacherDetail> teacherDetailSparseArray) {
-                DataSaveHandler.saveCurrentTeacherLocationData();
+                DataSaveHandler.saveMaster();
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        rv = view.findViewById(R.id.recycler);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ModifyTeacherLocationAdapter();
-        recyclerView.setAdapter(adapter);
-    }
-
-    private void onIntentCheck() {
-        Intent intent = getIntent();
-        teacherId = intent.getIntExtra("teacherId", -1);
-        if (teacherId == -1) finish();
-        this.thisTeacherDetail = TeacherLocationDatabase.getInstance().getDetail(teacherId);
+        rv.setAdapter(getAdapter());
     }
 
     static class ModifyTeacherLocationViewHolder {

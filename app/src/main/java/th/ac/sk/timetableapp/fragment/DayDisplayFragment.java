@@ -1,4 +1,4 @@
-package th.ac.sk.timetableapp.display;
+package th.ac.sk.timetableapp.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import th.ac.sk.timetableapp.MasterActivity;
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 
@@ -21,7 +20,6 @@ public class DayDisplayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
         if (args == null) args = new Bundle();
-        args.putString(MasterActivity.TAG_SCREEN, MasterActivity.SCREEN_MAIN);
         setArguments(args);
         return inflater.inflate(R.layout.fragment_day_display, container, false);
     }
@@ -50,7 +48,6 @@ public class DayDisplayFragment extends Fragment {
             DataSaveHandler.loadMaster();
             Bundle args = new Bundle();
             args.putInt(PeriodDisplayFragment.DAY, day);
-            args.putString(MasterActivity.TAG_SCREEN, PeriodDisplayFragment.getActionBarText(day));
             Navigation.findNavController(v).navigate(R.id.action_display_period, args);
         }
     }

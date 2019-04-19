@@ -1,6 +1,5 @@
-package th.ac.sk.timetableapp.display;
+package th.ac.sk.timetableapp.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -9,49 +8,56 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.Group;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import th.ac.sk.timetableapp.R;
+import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.PeriodDatabase;
-import th.ac.sk.timetableapp.datamodel.Period;
+import th.ac.sk.timetableapp.model.Period;
 
-public class PeriodDisplayActivity extends AppCompatActivity {
-    public static ArrayList<Period> dataList;
-    int day = 0;
+public class PeriodDisplayFragment extends Fragment {
+    static final String DAY = "day";
+    private static ArrayList<Period> dataList;
+    @IntRange(from = 1, to = 5)
+    private int day;
 
-    public static void importData(int day) {
+    private static void importData(@IntRange(from = 1, to = 5) int day) {
+        if (day < 0 || day > 5) throw new IllegalArgumentException("day");
         SparseArray<Period> data = PeriodDatabase.getInstance().getCurrentData();
         ArrayList<Period> result = new ArrayList<>();
         for (int i = 0; i < 10; i++) result.add(data.valueAt((10 * (day - 1) + i)));
         dataList = result;
     }
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setTitle("กรุณาเลือกคาบ");
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_period_display);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Bundle args = getArguments();
+        if (args == null) args = new Bundle();
 
-        day = getIntent().getIntExtra("day", 0);
-        if (day == 0) finish();
+        day = args.getInt(DAY, 0);
+        if (day == 0) throw new IllegalArgumentException("No Day Specified");
 
-        RecyclerView recyclerView = findViewById(R.id.grid);
-
-        initActionBar();
-        importData(day);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new PeriodDisplayAdapter());
+        return inflater.inflate(R.layout.fragment_period_display, container, false);
     }
 
-    public void initActionBar(){
-        String[] tag = {"จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"};
-        Objects.requireNonNull(getSupportActionBar()).setTitle("คาบเรียน วัน"+tag[day-1]);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        DataSaveHandler.loadMaster();
+        RecyclerView recyclerView = view.findViewById(R.id.grid);
+        importData(day);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new PeriodDisplayAdapter());
     }
 
     private Period getData(int i) {
@@ -184,10 +190,9 @@ public class PeriodDisplayActivity extends AppCompatActivity {
             holder.v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = getIntent();
-                    intent.setClass(getApplication(), TeacherLocationDisplayActivity.class);
-                    intent.putExtra("period", Integer.parseInt(String.valueOf(period.periodNum)));
-                    startActivity(intent);
+                    Bundle args = new Bundle();
+                    args.putInt("key", (day - 1) * 10 + period.periodNum - 1);
+                    Navigation.findNavController(v).navigate(R.id.action_display_teacher_location, args);
                 }
             });
         }

@@ -1,4 +1,4 @@
-package th.ac.sk.timetableapp.settings;
+package th.ac.sk.timetableapp.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import th.ac.sk.timetableapp.R;
-import th.ac.sk.timetableapp.util.DialogBuilder;
+import th.ac.sk.timetableapp.tool.DialogBuilder;
 
 public class SettingsFragment extends Fragment {
 

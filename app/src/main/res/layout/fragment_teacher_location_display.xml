@@ -6,4 +6,4 @@
     android:layout_height="match_parent"
     android:background="#EEEEEE"
     tools:listitem="@layout/widget_teacher_location_display_details"
-    tools:context=".display.TeacherLocationDisplayFragment"/>
+    tools:context=".fragment.TeacherLocationDisplayFragment"/>

@@ -6,4 +6,4 @@
     tools:listitem="@layout/widget_modify_classroom_display_period"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".modify.ModifyClassroomFragment"/>
+    tools:context=".fragment.ModifyClassroomFragment"/>

@@ -9,10 +9,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import androidx.annotation.NonNull;
-import th.ac.sk.timetableapp.datamodel.Period;
-import th.ac.sk.timetableapp.datamodel.TeacherDetail;
-import th.ac.sk.timetableapp.datamodel.TeacherLocation;
-import th.ac.sk.timetableapp.util.StaticUtil;
+import th.ac.sk.timetableapp.model.Period;
+import th.ac.sk.timetableapp.model.TeacherDetail;
+import th.ac.sk.timetableapp.model.TeacherLocation;
+import th.ac.sk.timetableapp.tool.StaticUtil;
 
 
 public class DataSaveHandler {
@@ -95,7 +95,7 @@ public class DataSaveHandler {
     public static boolean importPeriodData(String saveData, boolean check) {
         boolean success = false;
         try {
-            success = PeriodDatabase.checkIfCorrectlyImported(loadPeriod(saveData));
+            success = loadPeriod(saveData).size() == 50;
             if (check) {
                 savePeriod(saveData);
                 loadCurrentPeriodData();

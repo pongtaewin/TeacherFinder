@@ -8,8 +8,8 @@ import java.util.Objects;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import th.ac.sk.timetableapp.datamodel.TeacherDetail;
-import th.ac.sk.timetableapp.datamodel.TeacherLocation;
+import th.ac.sk.timetableapp.model.TeacherDetail;
+import th.ac.sk.timetableapp.model.TeacherLocation;
 
 public class TeacherLocationDatabase {
     public static final String TAG = "TeacherLocationDatabase";
@@ -53,7 +53,9 @@ public class TeacherLocationDatabase {
 
     public static int getNewDetailId() {
         SparseArray<TeacherDetail> detail = getInstance().getDetail();
-        return detail.keyAt(detail.size() - 1) + 1;
+        int size = detail.size();
+        if (size == 0) return 1;
+        return detail.keyAt(size - 1) + 1;
     }
 
     public void updateToNullLocation() {
@@ -254,7 +256,8 @@ public class TeacherLocationDatabase {
         try {
             return Objects.requireNonNull(getLocation(teacherId)).get(key);
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            Log.w("TeacherLocationDatabase", "NPE Caught at getLocation(teacherId)");
+            Log.w("TeacherLocationDatabase", "Returning null.");
             return null;
         }
     }
@@ -263,7 +266,8 @@ public class TeacherLocationDatabase {
         try {
             return Objects.requireNonNull(getLocation()).get(teacherId);
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            Log.w("TeacherLocationDatabase", "NPE Caught at getLocation()");
+            Log.w("TeacherLocationDatabase", "Returning null.");
             return null;
         }
     }
@@ -330,7 +334,7 @@ public class TeacherLocationDatabase {
         data.put(10, new TeacherDetail(10, "หัสวนัส", "เพ็งสันเทียะ"));
         data.put(11, new TeacherDetail(11, "กิตติธัช", "ทรงศิริ"));
         data.put(12, new TeacherDetail(12, "ศิริ", "สวัสดิ์แดง"));
-        data.put(13, new TeacherDetail(13, "นิพนธ์", ""));
+        data.put(13, new TeacherDetail(13, "นิพนธ์", "ด้วงคำจันทร์"));
         data.put(14, new TeacherDetail(14, "อติพล", "สุกฤษฎานนท์"));
         data.put(15, new TeacherDetail(15, "จิตรา", "สุทธิกลม"));
         data.put(16, new TeacherDetail(16, "ปิยาภรณ์", "หอมจันทร์"));

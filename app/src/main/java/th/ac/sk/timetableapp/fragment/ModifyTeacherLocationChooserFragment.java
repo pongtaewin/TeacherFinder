@@ -1,4 +1,4 @@
-package th.ac.sk.timetableapp.modify;
+package th.ac.sk.timetableapp.fragment;
 
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -19,13 +19,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import th.ac.sk.timetableapp.MasterActivity;
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
-import th.ac.sk.timetableapp.datamodel.TeacherDetail;
-import th.ac.sk.timetableapp.datamodel.TeacherLocation;
-import th.ac.sk.timetableapp.util.DialogBuilder;
+import th.ac.sk.timetableapp.model.TeacherDetail;
+import th.ac.sk.timetableapp.model.TeacherLocation;
+import th.ac.sk.timetableapp.tool.DialogBuilder;
 
 public class ModifyTeacherLocationChooserFragment extends Fragment {
     public TeacherChooserAdapter adapter = new TeacherChooserAdapter(this);
@@ -35,10 +34,9 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
     public static void openEditor(NavController navController, int teacherId) {
         DataSaveHandler.saveMaster();
         DataSaveHandler.loadMaster();
-        TeacherDetail detail = TeacherLocationDatabase.getInstance().getDetail(teacherId);
+
         Bundle args = new Bundle();
-        args.putString(MasterActivity.TAG_SCREEN, String.format("เวลาสอนของอาจารย์ %s %s", detail.name, detail.surname));
-        args.putInt("teacherId", detail.id);
+        args.putInt("teacherId", teacherId);
         navController.navigate(R.id.action_open_teacherLocationEditor, args);
     }
 

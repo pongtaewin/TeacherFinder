@@ -1,4 +1,4 @@
-package th.ac.sk.timetableapp.display;
+package th.ac.sk.timetableapp.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,7 +31,6 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putString(MasterActivity.TAG_SCREEN, MasterActivity.SCREEN_DAY_DISPLAY);
                 Navigation.findNavController(v).navigate(R.id.action_open_timetableView, args);
             }
         });
@@ -39,7 +38,6 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putString(MasterActivity.TAG_SCREEN, MasterActivity.SCREEN_MODIFY_CLASSROOM);
                 Navigation.findNavController(v).navigate(R.id.action_open_modifyClassroom, args);
             }
         });
@@ -47,7 +45,6 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putString(MasterActivity.TAG_SCREEN, MasterActivity.SCREEN_MODIFY_TEACHER_LOCATION_CHOOSER);
                 Navigation.findNavController(v).navigate(R.id.action_open_teacherLocationChooser, args);
             }
         });

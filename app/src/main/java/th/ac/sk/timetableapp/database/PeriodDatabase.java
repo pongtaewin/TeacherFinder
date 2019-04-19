@@ -5,12 +5,12 @@ import android.util.SparseArray;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import th.ac.sk.timetableapp.datamodel.Period;
+import th.ac.sk.timetableapp.model.Period;
 
-import static th.ac.sk.timetableapp.datamodel.Period.Type.LUNCH_PERIOD;
-import static th.ac.sk.timetableapp.datamodel.Period.Type.MILITARY_WORK;
-import static th.ac.sk.timetableapp.datamodel.Period.Type.NO_CLASS;
-import static th.ac.sk.timetableapp.datamodel.Period.Type.SCHOOL_CONFERENCE;
+import static th.ac.sk.timetableapp.model.Period.Type.LUNCH_PERIOD;
+import static th.ac.sk.timetableapp.model.Period.Type.MILITARY_WORK;
+import static th.ac.sk.timetableapp.model.Period.Type.NO_CLASS;
+import static th.ac.sk.timetableapp.model.Period.Type.SCHOOL_CONFERENCE;
 
 
 public class PeriodDatabase {
@@ -35,11 +35,6 @@ public class PeriodDatabase {
         return ourInstance;
     }
 
-
-    public static boolean checkIfCorrectlyImported(SparseArray<Period> data) {
-
-        return data.size() == 50;
-    }
 
     private void initPlaceholder() {
 

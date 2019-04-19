@@ -1,4 +1,4 @@
-package th.ac.sk.timetableapp.modify;
+package th.ac.sk.timetableapp.fragment;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.PeriodDatabase;
-import th.ac.sk.timetableapp.datamodel.Period;
+import th.ac.sk.timetableapp.model.Period;
 
 public class ModifyClassroomFragment extends Fragment {
     private static ArrayList<ModifyClassroomData> dataList;

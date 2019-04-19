@@ -1,9 +1,8 @@
-package th.ac.sk.timetableapp.util;
+package th.ac.sk.timetableapp.tool;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -22,9 +21,8 @@ import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.ImportExportUtil;
 import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
-import th.ac.sk.timetableapp.datamodel.TeacherDetail;
-import th.ac.sk.timetableapp.modify.ModifyTeacherLocationChooserFragment;
-import th.ac.sk.timetableapp.modify.ModifyTeacherLocationEditorActivity;
+import th.ac.sk.timetableapp.model.TeacherDetail;
+import th.ac.sk.timetableapp.fragment.ModifyTeacherLocationChooserFragment;
 
 
 public abstract class DialogBuilder {
@@ -144,34 +142,6 @@ public abstract class DialogBuilder {
                                 Objects.requireNonNull(text.getText()).toString(), Objects.requireNonNull(text2.getText()).toString()));
                         DataSaveHandler.saveMaster();
                         ModifyTeacherLocationChooserFragment.openEditor(navController, id);
-                    }
-                })
-                .setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).create();
-    }
-
-    @NonNull
-    public static AlertDialog getAddTeacherDialog(@NonNull final Activity activity) {
-        @SuppressLint("InflateParams") final View v = LayoutInflater.from(activity).inflate(R.layout.dialog_add_teacher, null, false);
-        final TextInputEditText text = v.findViewById(R.id.text);
-        final TextInputEditText text2 = v.findViewById(R.id.text2);
-        return new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
-                .setTitle("กรอกข้อมูลของอาจารย์")
-                .setView(v)
-                .setPositiveButton("เรียบร้อย", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int id = TeacherLocationDatabase.getNewDetailId();
-                        TeacherLocationDatabase.getInstance().putDetail(id, new TeacherDetail(id,
-                                Objects.requireNonNull(text.getText()).toString(), Objects.requireNonNull(text2.getText()).toString()));
-                        //Todo: Start Activity
-                        Intent intent = new Intent(v.getContext(), ModifyTeacherLocationEditorActivity.class);
-                        intent.putExtra("teacherId", id);
-                        activity.startActivity(intent);
                     }
                 })
                 .setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {

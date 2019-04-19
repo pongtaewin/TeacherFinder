@@ -1,4 +1,4 @@
-package th.ac.sk.timetableapp.datamodel;
+package th.ac.sk.timetableapp.model;
 
 import androidx.annotation.Nullable;
 
