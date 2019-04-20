@@ -9,16 +9,20 @@ import com.google.gson.JsonParser;
 
 public abstract class ImportExportUtil {
     public static boolean importData(String data) {
-        JsonObject object = (JsonObject) new JsonParser().parse(data);
-        String periodData = new Gson().toJson(object.get("period"));
-        String teacherLocationData = new Gson().toJson(object.get("teacherLocation"));
-        boolean success = DataSaveHandler.importPeriodData(periodData, false)
-                && DataSaveHandler.importTeacherLocationData(teacherLocationData, false);
-        if (success) {
-            DataSaveHandler.importPeriodData(periodData, true);
-            DataSaveHandler.importTeacherLocationData(teacherLocationData, true);
+        try {
+            JsonObject object = (JsonObject) new JsonParser().parse(data);
+            String periodData = new Gson().toJson(object.get("period"));
+            String teacherLocationData = new Gson().toJson(object.get("teacherLocation"));
+            boolean success = DataSaveHandler.importPeriodData(periodData, false)
+                    && DataSaveHandler.importTeacherLocationData(teacherLocationData, false);
+            if (success) {
+                DataSaveHandler.importPeriodData(periodData, true);
+                DataSaveHandler.importTeacherLocationData(teacherLocationData, true);
+            }
+            return success;
+        } catch (Exception e) {
+            return false;
         }
-        return success;
     }
 
     private static String exportData() {
@@ -35,14 +39,15 @@ public abstract class ImportExportUtil {
         context.startActivity(Intent.createChooser(shareIntent, "ส่งออกไปยัง..."));
     }
 
-    public static void wipeData(){
+    public static void wipeData() {
         PeriodDatabase.getInstance().updateToNullPeriod();
         TeacherLocationDatabase.getInstance().updateToNullLocation();
         TeacherLocationDatabase.getInstance().updateToNullDetail();
         DataSaveHandler.saveCurrentPeriodData();
         DataSaveHandler.saveCurrentTeacherLocationData();
     }
-    public static void rollbackToPlaceholderData(){
+
+    public static void rollbackToPlaceholderData() {
         PeriodDatabase.getInstance().updateToPlaceholderPeriod();
         TeacherLocationDatabase.getInstance().updateToPlaceholderLocation();
         TeacherLocationDatabase.getInstance().updateToPlaceholderDetail();
