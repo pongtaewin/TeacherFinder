@@ -30,45 +30,18 @@
             android:id="@+id/desc2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/kanit"
-            android:text="แอปพลิเคชันแสดงสถานที่สอน"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/desc3"
-            app:layout_constraintEnd_toEndOf="@+id/desc3"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/desc3"
-            app:layout_constraintTop_toBottomOf="@+id/desc1" />
-
-        <TextView
-            android:id="@+id/desc3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/kanit"
-            android:text="ของอาจารย์ประจำรายวิชา"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/desc4"
-            app:layout_constraintEnd_toEndOf="@+id/desc4"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/desc4"
-            app:layout_constraintTop_toBottomOf="@+id/desc2" />
-
-        <TextView
-            android:id="@+id/desc4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
             android:fontFamily="@font/kanit"
-            android:text="ตามตารางเรียน ม.502"
+            android:gravity="center"
+            android:text="แอปพลิเคชันตารางสอน\nและสถานที่สอนของอาจารย์\nโรงเรียนสวนกุหลาบวิทยาลัย"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/desc3" />
+            app:layout_constraintTop_toBottomOf="@+id/desc1" />
 
         <TextView
             android:id="@+id/desc1"

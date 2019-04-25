@@ -34,6 +34,7 @@
             android:fontFamily="@font/kanit_medium"
             android:gravity="center"
             android:text="คลิกดูตารางสอน"
+            android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
     </androidx.cardview.widget.CardView>
 
@@ -61,6 +62,7 @@
             android:fontFamily="@font/kanit_medium"
             android:gravity="center"
             android:text="ป้อน/ แก้ไข\nข้อมูลรายวิชา"
+            android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
     </androidx.cardview.widget.CardView>
 
@@ -88,11 +90,8 @@
             android:fontFamily="@font/kanit_medium"
             android:gravity="center"
             android:text="ป้อน/ แก้ไข\nข้อมูลสถานที่สอน\nของอาจารย์"
+            android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
     </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.Group
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

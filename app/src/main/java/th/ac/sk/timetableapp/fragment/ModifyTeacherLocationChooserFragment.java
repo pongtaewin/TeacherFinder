@@ -70,9 +70,9 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
-        TeacherLocationDatabase.getInstance().setLocationObserver(getViewLifecycleOwner(), new Observer<SparseArray<SparseArray<TeacherLocation>>>() {
+        TeacherLocationDatabase.getInstance().setLocationObserver(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
-            public void onChanged(SparseArray<SparseArray<TeacherLocation>> sparseArraySparseArray) {
+            public void onChanged(Object o) {
                 adapter.notifyDataSetChanged();
             }
         });
@@ -141,13 +141,13 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int pos) {
             TeacherChooserViewHolder VH = (TeacherChooserViewHolder) holder;
-            TeacherDetail data = TeacherLocationDatabase.getInstance().getDetail().valueAt(position);
+            TeacherDetail data = TeacherLocationDatabase.getInstance().getDetailAt(pos);
             VH.text.setText(String.format(Locale.getDefault(), "อ. %s %s", data.name, data.surname));
 
             VH.view.setBackgroundColor(getResources().getColor(
-                    position % 2 == 0 ? R.color.normalBackground : R.color.tintedBackground));
+                    pos % 2 == 0 ? R.color.normalBackground : R.color.tintedBackground));
             VH.view.setOnClickListener(new TeacherListener.Click(data.id));
             VH.view.setOnLongClickListener(new TeacherListener.LongClick(data.id, fragment));
         }

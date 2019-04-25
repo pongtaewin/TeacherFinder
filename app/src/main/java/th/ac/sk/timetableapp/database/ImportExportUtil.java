@@ -3,16 +3,13 @@ package th.ac.sk.timetableapp.database;
 import android.content.Context;
 import android.content.Intent;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import th.ac.sk.timetableapp.parser.DataParser;
 
 public abstract class ImportExportUtil {
     public static boolean importData(String data) {
         try {
-            JsonObject object = (JsonObject) new JsonParser().parse(data);
-            String periodData = new Gson().toJson(object.get("period"));
-            String teacherLocationData = new Gson().toJson(object.get("teacherLocation"));
+            String periodData = DataParser.extractPeriodFromPackedString(data);
+            String teacherLocationData = DataParser.extractTeacherLocationFromPackedString(data);
             boolean success = DataSaveHandler.importPeriodData(periodData, false)
                     && DataSaveHandler.importTeacherLocationData(teacherLocationData, false);
             if (success) {
@@ -26,10 +23,7 @@ public abstract class ImportExportUtil {
     }
 
     private static String exportData() {
-        JsonObject object = new JsonObject();
-        object.add("period", new JsonParser().parse(DataSaveHandler.loadPeriodIO()));
-        object.add("teacherLocation", new JsonParser().parse(DataSaveHandler.loadTeacherLocationIO()));
-        return new Gson().toJson(object);
+        return DataParser.packString(DataSaveHandler.getPeriod(),DataSaveHandler.getTeacherLocation());
     }
 
     public static void shareData(Context context) {

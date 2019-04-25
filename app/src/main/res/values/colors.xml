@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App Theme Colors -->
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00796B</color>
     <color name="colorAccent">#E91E63</color>
+    <!-- Text Colors -->
+    <color name="textColorPrimary">@android:color/black</color>
+    <color name="textColorSecondary">@android:color/black</color>
+    <color name="textColorSpecial">@android:color/black</color>
+    <!-- School Theme Colors -->
     <color name="colorThemePink">#F2A7C6</color>
     <color name="colorThemeBlue">#55C4F1</color>
+    <color name="colorThemePinkTint">#7D5666</color>
+    <color name="colorThemeBlueTint">#2C667D</color>
+    <!-- Day Colors -->
     <color name="colorMonday">#FFF59D</color>
     <color name="colorTuesday">#F8BBD0</color>
     <color name="colorWednesday">#CCFF90</color>
     <color name="colorThursday">#FFCC80</color>
     <color name="colorFriday">#80DEEA</color>
+    <!-- Alternating Background Colors -->
     <color name="normalBackground">#FAFAFA</color>
     <color name="tintedBackground">#EEEEEE</color>
+    <!-- Other Colors -->
     <color name="colorError">#D50000</color>
     <color name="inactive">#E0E0E0</color>
+    <color name="colorInvisible">#00000000</color>
 </resources>

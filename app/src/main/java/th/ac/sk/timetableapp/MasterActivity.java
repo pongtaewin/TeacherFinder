@@ -1,10 +1,14 @@
 package th.ac.sk.timetableapp;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.tool.StaticUtil;
 
@@ -22,11 +28,11 @@ public class MasterActivity extends AppCompatActivity {
     public static final String SPLASH_SCREEN_ALREADY = "splashScreenAlready";
     public static boolean hideSettings = false;
     public NavController navController;
+    public ActionBar actionBar;
 
     NavController.OnDestinationChangedListener listener = new NavController.OnDestinationChangedListener() {
         @Override
         public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-            ActionBar actionBar = Objects.requireNonNull(getSupportActionBar());
             int id = Objects.requireNonNull(navController.getCurrentDestination()).getId();
 
             actionBar.setTitle(StaticUtil.getTitleText(id, arguments));
@@ -45,10 +51,18 @@ public class MasterActivity extends AppCompatActivity {
         StaticUtil.getInstance().applyContext(this);
         DataSaveHandler.getInstance();
 
-        NavHostFragment fragment = Objects.requireNonNull((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment));
+        actionBar = Objects.requireNonNull(getSupportActionBar());
+
+        final NavHostFragment fragment = Objects.requireNonNull((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment));
         navController = fragment.getNavController();
 
-        NavigationUI.setupActionBarWithNavController(this, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController,
+                new AppBarConfiguration.Builder(R.id.mainFragment).setFallbackOnNavigateUpListener(new AppBarConfiguration.OnNavigateUpListener() {
+                    @Override
+                    public boolean onNavigateUp(){
+                        return navController.popBackStack();
+                    }
+                }).build());
         navController.addOnDestinationChangedListener(listener);
 
         if (savedInstanceState == null || !savedInstanceState.getBoolean(SPLASH_SCREEN_ALREADY, false))
@@ -77,16 +91,28 @@ public class MasterActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
             case R.id.settings:
                 navController.navigate(R.id.settingsFragment);
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        boolean results = navController.popBackStack();
-        if (!results) super.onBackPressed();
+        if (!navController.popBackStack()) super.onBackPressed();
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+        return super.onNavigateUp();
+    }
+
+    @Override
+    public boolean onNavigateUpFromChild(Activity child) {
+        return super.onNavigateUpFromChild(child);
     }
 }

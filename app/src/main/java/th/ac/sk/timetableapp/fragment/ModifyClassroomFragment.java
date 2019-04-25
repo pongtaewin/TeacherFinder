@@ -2,7 +2,6 @@ package th.ac.sk.timetableapp.fragment;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -18,12 +24,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.PeriodDatabase;
@@ -75,7 +75,7 @@ public class ModifyClassroomFragment extends Fragment {
     }
 
     private static void updateData(Period period, int position) {
-        PeriodDatabase.getInstance().putToCurrentData(position, period);
+        PeriodDatabase.getInstance().putPeriod(position, period);
         DataSaveHandler.saveMaster();
     }
 
@@ -87,7 +87,7 @@ public class ModifyClassroomFragment extends Fragment {
             header.type = ModifyClassroomData.VIEW_TYPE_HEADER;
             input.add(header);
             for (int i = 0; i < 10; i++) {
-                Period period = PeriodDatabase.getInstance().getCurrentData().get((day * 10) + i);
+                Period period = PeriodDatabase.getInstance().getPeriod().get((day * 10) + i);
                 Objects.requireNonNull(period);
                 if (period.type == Period.Type.HAVE_CLASS) {
                     ModifyClassroomData display = new ModifyClassroomData(d[day]);
@@ -119,9 +119,11 @@ public class ModifyClassroomFragment extends Fragment {
         DataSaveHandler.loadMaster();
 
         importDataFromDatabase();
-        PeriodDatabase.getInstance().setObserver(this, new Observer<SparseArray<SparseArray<Period>>>() {
+        PeriodDatabase.getInstance().setObserver(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
-            public void onChanged(SparseArray<SparseArray<Period>> data) { DataSaveHandler.saveCurrentPeriodData();}
+            public void onChanged(Object o) {
+                DataSaveHandler.saveCurrentPeriodData();
+            }
         });
 
         rv = v.findViewById(R.id.recycler);
@@ -165,6 +167,7 @@ public class ModifyClassroomFragment extends Fragment {
             TextInputEditText subjectET;
             TextInputEditText subjectCodeET;
             TextInputEditText teacherListET;
+            TextInputEditText roomET;
             MaterialButton submitBtn;
             MaterialButton toggleBtn;
             Period backupPeriod;
@@ -176,6 +179,7 @@ public class ModifyClassroomFragment extends Fragment {
                 subjectET = v.findViewById(R.id.classroom).findViewWithTag("EditText");
                 subjectCodeET = v.findViewById(R.id.location).findViewWithTag("EditText");
                 teacherListET = v.findViewById(R.id.teacherList).findViewWithTag("EditText");
+                roomET = v.findViewById(R.id.room).findViewWithTag("EditText");
                 submitBtn = v.findViewById(R.id.submit);
                 toggleBtn = v.findViewById(R.id.toggle);
                 errorMessage = v.findViewById(R.id.errorMessage);
@@ -189,6 +193,7 @@ public class ModifyClassroomFragment extends Fragment {
                 subjectET.setText(backupPeriod.subject);
                 subjectCodeET.setText(backupPeriod.subjectCode);
                 teacherListET.setText(backupPeriod.teacherList);
+                roomET.setText(backupPeriod.room);
                 submitBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -196,9 +201,9 @@ public class ModifyClassroomFragment extends Fragment {
                                 nullOrToString(subjectET.getText()),
                                 nullOrToString(subjectCodeET.getText()),
                                 nullOrToString(teacherListET.getText()),
+                                nullOrToString(roomET.getText()),
                                 backupPeriod.periodNum);
                         if (data.period.classIsNull()) {
-                            data.period = backupPeriod;
                             errorMessage.setVisibility(View.VISIBLE);
                         } else {
                             onEditConfirmButtonClick(data);
@@ -294,9 +299,9 @@ public class ModifyClassroomFragment extends Fragment {
 
             void setupData(final ModifyClassroomData data) {
                 period = data.period;
-                periodTV.setText(String.format(Locale.getDefault(), "คาบที่ %d :", period.periodNum));
-                line1TV.setText(String.format(Locale.getDefault(), "%s (%s)", period.subject, period.subjectCode));
-                line2TV.setText(period.teacherList);
+                periodTV.setText(String.format(Locale.getDefault(), "%d)", period.periodNum));
+                line1TV.setText(String.format(Locale.getDefault(), "%s (%s) : %s", period.subject, period.subjectCode, period.room));
+                line2TV.setText(String.format(Locale.getDefault(),"%s",period.teacherList));
                 icBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -321,7 +326,7 @@ public class ModifyClassroomFragment extends Fragment {
 
             void setupData(final ModifyClassroomData data) {
                 period = data.period;
-                periodTV.setText(String.format(Locale.getDefault(), "คาบที่ %d :", period.periodNum));
+                periodTV.setText(String.format(Locale.getDefault(), "%d)", period.periodNum));
 
                 descTV.setText(Period.Type.getStringFromType(period.type));
                 icBtn.setOnClickListener(new View.OnClickListener() {

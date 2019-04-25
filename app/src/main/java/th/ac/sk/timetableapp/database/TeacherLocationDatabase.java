@@ -1,44 +1,57 @@
 package th.ac.sk.timetableapp.database;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
-import android.util.SparseArray;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+
 import th.ac.sk.timetableapp.model.TeacherDetail;
 import th.ac.sk.timetableapp.model.TeacherLocation;
+import th.ac.sk.timetableapp.parser.DataParser;
 
+@SuppressLint("UseSparseArrays")
 public class TeacherLocationDatabase {
     public static final String TAG = "TeacherLocationDatabase";
     private static TeacherLocationDatabase ourInstance;
-    private MutableLiveData<SparseArray<SparseArray<TeacherLocation>>> locationDatabase;
-    private MutableLiveData<SparseArray<TeacherDetail>> detailDatabase;
-    private static Observer<Object> debugObserver = new Observer<Object>() {
-        @Override
-        public void onChanged(Object data) {
-            Log.w("observer", "Data Changed: " + data.toString());
-        }
-    };
+    private MutableLiveData<HashMap<Integer, HashMap<Integer, TeacherLocation>>> locationDatabase;
+    private MutableLiveData<HashMap<Integer, TeacherDetail>> detailDatabase;
 
     private TeacherLocationDatabase() {
     }
 
-    public static boolean checkIfCorrectlyImported(format data) {
-        return (data.teacherDetail != null) && data.teacherLocation != null;
+    public static boolean checkIfCorrectlyImported(DataParser.TeacherLocationDatabaseFormat data) {
+        return data.getTeacherDetail() != null && data.getTeacherLocation() != null;
     }
 
     public static TeacherLocationDatabase getInstance() {
         if (ourInstance == null) {
             ourInstance = new TeacherLocationDatabase();
             ourInstance.locationDatabase = new MutableLiveData<>();
-            ourInstance.locationDatabase.setValue(new SparseArray<SparseArray<TeacherLocation>>());
-            ourInstance.locationDatabase.observeForever(debugObserver);
+            ourInstance.locationDatabase.setValue(new HashMap<Integer, HashMap<Integer, TeacherLocation>>());
+            ourInstance.locationDatabase.observeForever(new Observer<Object>() {
+                @Override
+                public void onChanged(Object data) {
+                    Log.w("observer", "TeacherLocation Data Changed: " + data.toString());
+                }
+            });
             ourInstance.detailDatabase = new MutableLiveData<>();
-            ourInstance.detailDatabase.setValue(new SparseArray<TeacherDetail>());
-            ourInstance.detailDatabase.observeForever(debugObserver);
+            ourInstance.detailDatabase.setValue(new HashMap<Integer, TeacherDetail>());
+            ourInstance.detailDatabase.observeForever(new Observer<Object>() {
+                @Override
+                public void onChanged(Object data) {
+                    Log.w("observer", "TeacherDetail Data Changed: " + data.toString());
+                }
+            });
             //ourInstance.updateToNullLocation();
             //ourInstance.updateToNullDetail();
             ourInstance.updateToPlaceholderLocation();
@@ -51,11 +64,15 @@ public class TeacherLocationDatabase {
         return getInstance().getDetail().size();
     }
 
-    public static int getNewDetailId() {
-        SparseArray<TeacherDetail> detail = getInstance().getDetail();
-        int size = detail.size();
+    public static int getNewTeacherID() {
+        HashMap<Integer, TeacherDetail> detailMap = getInstance().getDetail();
+        int size = detailMap.size();
         if (size == 0) return 1;
-        return detail.keyAt(size - 1) + 1;
+        int max = 1;
+        for (HashMap.Entry<Integer, TeacherDetail> detailEntry : detailMap.entrySet()) {
+            max = Math.max(max, detailEntry.getValue().id);
+        }
+        return max + 1;
     }
 
     public void updateToNullLocation() {
@@ -262,7 +279,7 @@ public class TeacherLocationDatabase {
         }
     }
 
-    public SparseArray<TeacherLocation> getLocation(int teacherId) {
+    public HashMap<Integer, TeacherLocation> getLocation(int teacherId) {
         try {
             return Objects.requireNonNull(getLocation()).get(teacherId);
         } catch (NullPointerException e) {
@@ -272,34 +289,34 @@ public class TeacherLocationDatabase {
         }
     }
 
-    public SparseArray<SparseArray<TeacherLocation>> getLocation() {
+    public HashMap<Integer, HashMap<Integer, TeacherLocation>> getLocation() {
         return locationDatabase.getValue();
     }
 
-    public void putLocation(SparseArray<SparseArray<TeacherLocation>> data) {
+    public void putLocation(HashMap<Integer, HashMap<Integer, TeacherLocation>> data) {
         locationDatabase.setValue(data);
     }
 
-    public void putLocation(int teacherId, SparseArray<TeacherLocation> data) {
-        SparseArray<SparseArray<TeacherLocation>> parentData = getLocation();
+    public void putLocation(int teacherId, HashMap<Integer, TeacherLocation> data) {
+        HashMap<Integer, HashMap<Integer, TeacherLocation>> parentData = getLocation();
         parentData.put(teacherId, data);
         locationDatabase.setValue(parentData);
     }
 
     public void putLocation(int teacherId, int key, TeacherLocation data) {
-        SparseArray<TeacherLocation> parentData = getLocation(teacherId);
-        if (parentData == null) parentData = new SparseArray<>();
+        HashMap<Integer, TeacherLocation> parentData = getLocation(teacherId);
+        if (parentData == null) parentData = new HashMap<>();
         parentData.put(key, data);
         putLocation(teacherId, parentData);
     }
 
     public void removeLocation() {
-        putLocation(new SparseArray<SparseArray<TeacherLocation>>());
+        putLocation(new HashMap<Integer, HashMap<Integer, TeacherLocation>>());
     }
 
     public boolean removeLocation(int teacherId) {
         if (getLocation(teacherId) == null) return false;
-        SparseArray<SparseArray<TeacherLocation>> newData = getLocation();
+        HashMap<Integer, HashMap<Integer, TeacherLocation>> newData = getLocation();
         newData.remove(teacherId);
         putLocation(newData);
         return true;
@@ -307,7 +324,7 @@ public class TeacherLocationDatabase {
 
     public boolean removeLocation(int teacherId, int key) {
         if (getLocation(teacherId, key) == null) return false;
-        SparseArray<SparseArray<TeacherLocation>> newData = getLocation();
+        HashMap<Integer, HashMap<Integer, TeacherLocation>> newData = getLocation();
         newData.get(teacherId).remove(key);
         putLocation(newData);
         return true;
@@ -321,7 +338,7 @@ public class TeacherLocationDatabase {
     public void updateToPlaceholderDetail() {
         Log.d(TAG, "updateToPlaceholderDetail() called");
         updateToNullDetail();
-        SparseArray<TeacherDetail> data = new SparseArray<>();
+        HashMap<Integer, TeacherDetail> data = new HashMap<>();
         data.put(1, new TeacherDetail(1, "สุมิตร", "สวนสุข"));
         data.put(2, new TeacherDetail(2, "ปิยมาศ", "ศรีสมพันธ์"));
         data.put(3, new TeacherDetail(3, "ธนดล", "ยิ้มถนอม"));
@@ -345,53 +362,62 @@ public class TeacherLocationDatabase {
         detailDatabase.setValue(data);
     }
 
-    public SparseArray<TeacherDetail> getDetail() {
+    public HashMap<Integer, TeacherDetail> getDetail() {
         return detailDatabase.getValue();
+    }
+
+    public TeacherDetail getDetailAt(int pos) {
+        Set<Integer> positionSet = TeacherLocationDatabase.getInstance().getDetail().keySet();
+        Iterator<Integer> it = positionSet.iterator();
+        int key = 1;
+        for (int i = 0; i < pos; i++) if (it.hasNext()) key = it.next();
+        return TeacherLocationDatabase.getInstance().getDetail(key);
     }
 
     public TeacherDetail getDetail(int teacherId) {
         return getDetail().get(teacherId);
     }
 
-    public void putDetail(SparseArray<TeacherDetail> data) {
+    public void putDetail(HashMap<Integer, TeacherDetail> data) {
         detailDatabase.setValue(data);
     }
 
     public void putDetail(int teacherId, TeacherDetail data) {
-        SparseArray<TeacherDetail> parentData = getDetail();
+        HashMap<Integer, TeacherDetail> parentData = getDetail();
         parentData.put(teacherId, data);
         putDetail(parentData);
     }
 
     public boolean removeDetail() {
-        putDetail(new SparseArray<TeacherDetail>());
+        putDetail(new HashMap<Integer, TeacherDetail>());
         return true;
     }
 
     public boolean removeDetail(int teacherId) {
         if (getDetail(teacherId) == null) return false;
-        SparseArray<TeacherDetail> newData = getDetail();
+        HashMap<Integer, TeacherDetail> newData = getDetail();
         newData.remove(teacherId);
         putDetail(newData);
         return true;
     }
 
-    public void setLocationObserver(LifecycleOwner owner, Observer<? super SparseArray<SparseArray<TeacherLocation>>> observer) {
+    public void setLocationObserver(LifecycleOwner owner, Observer<? super HashMap<Integer, HashMap<Integer, TeacherLocation>>> observer) {
         locationDatabase.observe(owner, observer);
     }
 
-    public void setDetailObserver(LifecycleOwner owner, Observer<? super SparseArray<TeacherDetail>> observer) {
+    public void setDetailObserver(LifecycleOwner owner, Observer<? super HashMap<Integer, TeacherDetail>> observer) {
         detailDatabase.observe(owner, observer);
     }
-
+    /*
     public static class format {
-        public SparseArray<SparseArray<TeacherLocation>> teacherLocation;
-        public SparseArray<TeacherDetail> teacherDetail;
+        public HashMap<Integer, HashMap<Integer, TeacherLocation>> teacherLocation;
+        public HashMap<Integer, TeacherDetail> teacherDetail;
 
-        public format(SparseArray<SparseArray<TeacherLocation>> teacherLocation, SparseArray<TeacherDetail> teacherDetail) {
+        public format(HashMap<Integer, HashMap<Integer, TeacherLocation>> teacherLocation, HashMap<Integer, TeacherDetail> teacherDetail) {
             this.teacherLocation = teacherLocation;
             this.teacherDetail = teacherDetail;
         }
     }
+    */
 
 }

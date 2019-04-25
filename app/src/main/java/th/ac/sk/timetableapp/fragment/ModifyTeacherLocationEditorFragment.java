@@ -106,9 +106,9 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         DataSaveHandler.loadMaster();
         importDataFromDatabase();
-        TeacherLocationDatabase.getInstance().setDetailObserver(this, new Observer<SparseArray<TeacherDetail>>() {
+        TeacherLocationDatabase.getInstance().setDetailObserver(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
-            public void onChanged(SparseArray<TeacherDetail> teacherDetailSparseArray) {
+            public void onChanged(Object o) {
                 DataSaveHandler.saveMaster();
             }
         });
@@ -168,7 +168,7 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
                 periodTV.setText(String.format(Locale.getDefault(), "คาบที่ %d :", (location.key % 10) + 1));
                 boolean occupied = !(location.classroom == null || location.location == null);
                 statusTV.setText(occupied ? String.format(Locale.getDefault(), "สอนที่ห้อง %s (%s)", location.classroom, location.location) : "ว่าง");
-                statusTV.setTextColor(StaticUtil.resources.getColor(occupied ? android.R.color.holo_red_dark : android.R.color.holo_blue_dark));
+                statusTV.setTextColor(StaticUtil.resources.getColor(occupied ? R.color.colorAccent : R.color.textColorPrimary));
                 icBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

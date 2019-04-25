@@ -8,15 +8,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.PeriodDatabase;
@@ -30,9 +34,9 @@ public class PeriodDisplayFragment extends Fragment {
 
     private static void importData(@IntRange(from = 1, to = 5) int day) {
         if (day < 0 || day > 5) throw new IllegalArgumentException("day");
-        SparseArray<Period> data = PeriodDatabase.getInstance().getCurrentData();
+        HashMap<Integer,Period> data = PeriodDatabase.getInstance().getPeriod();
         ArrayList<Period> result = new ArrayList<>();
-        for (int i = 0; i < 10; i++) result.add(data.valueAt((10 * (day - 1) + i)));
+        for (int i = 0; i < 10; i++) result.add(data.get((10 * (day - 1) + i)));
         dataList = result;
     }
 
@@ -117,11 +121,12 @@ public class PeriodDisplayFragment extends Fragment {
         TextView subject;
         TextView subjectCode;
         TextView teacherList;
+        TextView room;
 
         TextView dataNormal;
         TextView dataReduced;
         Group group;
-        View banner;
+        ConstraintLayout banner;
         View v;
 
         PeriodDisplayViewHolder(@NonNull View v) {
@@ -129,6 +134,7 @@ public class PeriodDisplayFragment extends Fragment {
             dayTag = v.findViewById(R.id.dayTag);
             periodNum = v.findViewById(R.id.periodNum);
             subject = v.findViewById(R.id.header);
+            room = v.findViewById(R.id.room);
             subjectCode = v.findViewById(R.id.location);
             teacherList = v.findViewById(R.id.teacherList);
             dataNormal = v.findViewById(R.id.dataNormal);
@@ -168,6 +174,7 @@ public class PeriodDisplayFragment extends Fragment {
             boolean haveClass = period.type == Period.Type.HAVE_CLASS;
             holder.dayTag.setText(tag[day - 1]);
             holder.subject.setText(haveClass ? period.subject : Period.Type.getStringFromType(period.type));
+            holder.room.setText(String.format("เรียนที่ %s",period.room));
             holder.subjectCode.setText(period.subjectCode);
             holder.periodNum.setText(String.valueOf(period.periodNum));
             holder.teacherList.setText(period.teacherList);
@@ -175,6 +182,7 @@ public class PeriodDisplayFragment extends Fragment {
             holder.dataNormal.setText(periodInfo[0]);
             holder.dataReduced.setText(periodInfo[1]);
             holder.group.setVisibility(haveClass ? View.VISIBLE : View.GONE);
+            holder.room.setVisibility(haveClass ? View.VISIBLE : View.GONE);
             if (!haveClass)
                 holder.banner.setBackgroundColor(getResources().getColor(R.color.inactive));
             else if (day == 1)

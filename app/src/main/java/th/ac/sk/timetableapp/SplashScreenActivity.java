@@ -2,13 +2,9 @@ package th.ac.sk.timetableapp;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
-import th.ac.sk.timetableapp.R;
-
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import java.util.Objects;
 

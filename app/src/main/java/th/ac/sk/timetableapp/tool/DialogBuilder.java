@@ -29,7 +29,7 @@ public abstract class DialogBuilder {
 
     @NonNull
     public static AlertDialog getWipeDataDialog(@NonNull final Activity activity) {
-        return new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
+        return new MaterialAlertDialogBuilder(activity, R.style.AppTheme_AlertDialog)
                 .setTitle("ต้องการล้างข้อมูลทั้งหมดหรือไม่")
                 .setView(inflateDialogMessage(activity, "ข้อมูลทั้งหมดที่บันทึกไว้จะหายไป"))
                 .setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
@@ -50,7 +50,7 @@ public abstract class DialogBuilder {
 
     @NonNull
     public static AlertDialog getRollbackDialog(@NonNull final Activity activity) {
-        return new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
+        return new MaterialAlertDialogBuilder(activity, R.style.AppTheme_AlertDialog)
                 .setTitle("ต้องการกลับไปใช้ข้อมูลของ ม.502 หรือไม่")
                 .setView(inflateDialogMessage(activity, "ข้อมูลทั้งหมดที่บันทึกไว้จะถูกแทนที่ด้วยข้อมูลของ ม.502 สำหรับการทดสอบ"))
                 .setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
@@ -73,7 +73,7 @@ public abstract class DialogBuilder {
     public static AlertDialog getImportDataDialog(@NonNull final Activity activity) {
         @SuppressLint("InflateParams") View v = LayoutInflater.from(activity).inflate(R.layout.dialog_import_data_input, null, false);
         final TextInputEditText text = v.findViewById(R.id.text);
-        return new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
+        return new MaterialAlertDialogBuilder(activity, R.style.AppTheme_AlertDialog)
                 .setTitle("กรอกข้อมูลนำเข้า")
                 .setView(v)
                 .setPositiveButton("เรียบร้อย", new DialogInterface.OnClickListener() {
@@ -107,7 +107,7 @@ public abstract class DialogBuilder {
 
     @NonNull
     public static AlertDialog getExportDataDialog(@NonNull final Activity activity) {
-        return new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
+        return new MaterialAlertDialogBuilder(activity, R.style.AppTheme_AlertDialog)
                 .setTitle("ต้องการส่งออกข้อมูลหรือไม่")
                 .setView(inflateDialogMessage(activity, "คุณจะได้ข้อมูลในรูปแบบตัวอักษร เพื่อใช้สำหรับการนำเข้าในโทรศัพท์อื่นๆ " +
                         "ถ้าต้องการนำเข้าข้อมูล ให้มาที่หน้านี้ แล้วเลือก \"นำเข้าข้อมูล\""))
@@ -130,14 +130,14 @@ public abstract class DialogBuilder {
         @SuppressLint("InflateParams") final View v = LayoutInflater.from(activity).inflate(R.layout.dialog_add_teacher, null, false);
         final TextInputEditText text = v.findViewById(R.id.text);
         final TextInputEditText text2 = v.findViewById(R.id.text2);
-        return new MaterialAlertDialogBuilder(activity, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
+        return new MaterialAlertDialogBuilder(activity, R.style.AppTheme_AlertDialog)
                 .setTitle("กรอกข้อมูลของอาจารย์")
                 .setView(v)
                 .setPositiveButton("เรียบร้อย", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DataSaveHandler.loadMaster();
-                        int id = TeacherLocationDatabase.getNewDetailId();
+                        int id = TeacherLocationDatabase.getNewTeacherID();
                         TeacherLocationDatabase.getInstance().putDetail(id, new TeacherDetail(id,
                                 Objects.requireNonNull(text.getText()).toString(), Objects.requireNonNull(text2.getText()).toString()));
                         DataSaveHandler.saveMaster();
@@ -154,7 +154,7 @@ public abstract class DialogBuilder {
 
     @NonNull
     public static AlertDialog getDeleteItemDialog(@NonNull final Fragment fragment, final TeacherDetail detail) {
-        return new MaterialAlertDialogBuilder(fragment.requireContext(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Kanit)
+        return new MaterialAlertDialogBuilder(fragment.requireContext(), R.style.AppTheme_AlertDialog)
                 .setTitle("ยืนยันการลบข้อมูล")
                 .setView(inflateDialogMessage(fragment, String.format("ข้อมูลของ อ. %s %s จะถูกลบและไม่สามารถกู้คืนกลับมาได้อีก", detail.name, detail.surname)))
                 .setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {

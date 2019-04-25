@@ -10,14 +10,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="นำเข้าและส่งออก"
-        app:fontFamily="@font/kanit_semibold"
         android:paddingLeft="72dp"
-        android:paddingRight="16dp"
         android:paddingTop="16dp"
+        android:paddingRight="16dp"
         android:paddingBottom="16dp"
-
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Kanit.Header" />
+        android:text="นำเข้าและส่งออก"
+        android:textAppearance="@style/AppTheme.Header"
+        app:fontFamily="@font/kanit_semibold" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/choice_import"
@@ -130,14 +129,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="เปลี่ยนแปลงข้อมูล"
-        app:fontFamily="@font/kanit_semibold"
         android:paddingLeft="72dp"
-        android:paddingRight="16dp"
         android:paddingTop="16dp"
+        android:paddingRight="16dp"
         android:paddingBottom="16dp"
-
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Kanit.Header" />
+        android:text="เปลี่ยนแปลงข้อมูล"
+        android:textAppearance="@style/AppTheme.Header"
+        app:fontFamily="@font/kanit_semibold" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/choice_wipe"

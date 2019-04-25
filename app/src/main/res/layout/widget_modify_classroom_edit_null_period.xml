@@ -13,6 +13,7 @@
         android:fontFamily="@font/kanit_semibold"
         android:text="คาบที่ 1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        android:textColor="@color/textColorSecondary"
         app:layout_constraintStart_toEndOf="@+id/tag"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,9 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:fontFamily="@font/kanit_semibold"
+        android:fontFamily="@font/kanit_medium"
         android:text="กำลังแก้ไข :"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        android:textColor="@color/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="@+id/period"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/period" />
@@ -36,10 +38,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorThemePink"
         android:fontFamily="@font/kanit_medium"
         android:text="ตกลง"
-        android:textColor="@android:color/primary_text_light"
-        app:backgroundTint="@color/colorThemePink"
+        android:textColor="@color/textColorPrimary"
+        app:backgroundTint="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooser" />
@@ -52,10 +55,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorInvisible"
         android:fontFamily="@font/kanit_medium"
         android:text="กรอกข้อมูลคาบ"
-        android:textColor="@android:color/primary_text_light"
-        app:backgroundTint="@color/tintedBackground"
+        android:textColor="@color/textColorSecondary"
+        app:backgroundTint="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooser" />
@@ -78,9 +82,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:buttonTint="@color/colorAccent"
             android:checked="true"
             android:fontFamily="@font/kanit"
-            android:text="ไม่มีการเรียนการสอน" />
+            android:text="ไม่มีการเรียนการสอน"
+            android:textColor="@color/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/choose2"
@@ -88,8 +94,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:buttonTint="@color/colorAccent"
             android:fontFamily="@font/kanit"
-            android:text="พักรับประทานอาหารกลางวัน" />
+            android:text="พักรับประทานอาหารกลางวัน"
+            android:textColor="@color/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/choose3"
@@ -97,8 +105,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:buttonTint="@color/colorAccent"
             android:fontFamily="@font/kanit"
-            android:text="คาบประชุม" />
+            android:text="คาบประชุม"
+            android:textColor="@color/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/choose4"
@@ -106,7 +116,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:buttonTint="@color/colorAccent"
             android:fontFamily="@font/kanit"
-            android:text="กิจกรรมรักษาดินแดน" />
+            android:text="กิจกรรมรักษาดินแดน"
+            android:textColor="@color/textColorPrimary" />
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

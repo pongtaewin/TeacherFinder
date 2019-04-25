@@ -1,5 +1,7 @@
 package th.ac.sk.timetableapp.model;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 public class Period {
@@ -7,6 +9,7 @@ public class Period {
     public String subject = null;
     public String subjectCode = null;
     public String teacherList = null;
+    public String room = null;
     public int periodNum;
 
     public Period(int type, int periodNum) {
@@ -16,6 +19,7 @@ public class Period {
         setPeriodNum(periodNum);
     }
 
+    @Deprecated
     public Period(@Nullable String subject, @Nullable String subjectCode, @Nullable String teacherList, int periodNum) {
         this.type = Type.HAVE_CLASS;
         setPeriodNum(periodNum);
@@ -24,13 +28,30 @@ public class Period {
         this.teacherList = teacherList;
     }
 
+    public Period(@Nullable String subject, @Nullable String subjectCode, @Nullable String teacherList, @Nullable String room, int periodNum) {
+        this.type = Type.HAVE_CLASS;
+        setPeriodNum(periodNum);
+        this.subject = subject;
+        this.subjectCode = subjectCode;
+        this.teacherList = teacherList;
+        this.room = room;
+    }
+
     public void setPeriodNum(int periodNum) {
         this.periodNum = periodNum;
     }
 
     public boolean classIsNull() {
+        Log.w("classIsNull", "------- Period Info -------");
+        Log.w("classIsNull", "type = " + type);
+        Log.w("classIsNull", "subject = " + subject);
+        Log.w("classIsNull", "subjectCode = " + subjectCode);
+        Log.w("classIsNull", "teacherList = " + teacherList);
+        Log.w("classIsNull", "room = " + room);
+        Log.w("classIsNull", "periodNum = " + periodNum);
+
         return type == Type.HAVE_CLASS && (
-                subject == null || subjectCode == null || teacherList == null
+                subject == null || subjectCode == null || teacherList == null || room == null
                         || periodNum <= 0 || periodNum > 10);
     }
 

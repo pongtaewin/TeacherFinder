@@ -6,13 +6,13 @@
 
     <TextView
         android:id="@+id/period"
-        android:layout_width="66dp"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/kanit_semibold"
-        android:text="คาบที่ 10 :"
+        android:text="10)"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/line2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/line1" />
@@ -28,6 +28,7 @@
         android:singleLine="false"
         android:text="คณิตศาสตร์เพิ่มเติมเข้มข้น 22222222222222222222222 (ว32088)"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@color/textColorPrimary"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/line2"
         app:layout_constraintEnd_toStartOf="@+id/ic_edit"
@@ -46,6 +47,7 @@
         android:singleLine="false"
         android:text="ธนดล\nลลลลลล"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/textColorSecondary"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ic_edit"
@@ -73,8 +75,9 @@
         android:fontFamily="@font/kanit"
         android:text="อ."
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textSize="14sp"
+        android:textColor="@color/textColorSecondary"
 
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/line2"
         app:layout_constraintStart_toEndOf="@+id/period"
         app:layout_constraintTop_toTopOf="@+id/line2"

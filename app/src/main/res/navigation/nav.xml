@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
     app:startDestination="@id/innerNav">
-
     <fragment
         android:id="@+id/settingsFragment"
         android:name="th.ac.sk.timetableapp.fragment.SettingsFragment"
@@ -23,19 +22,13 @@
                 app:argType="string" />
             <action
                 android:id="@+id/action_open_teacherLocationChooser"
-                app:destination="@id/modifyTeacherLocationChooserFragment"
-                app:popUpTo="@+id/mainFragment"
-                app:popUpToInclusive="false" />
+                app:destination="@id/modifyTeacherLocationChooserFragment" />
             <action
                 android:id="@+id/action_open_timetableView"
-                app:destination="@id/dayDisplayFragment"
-                app:popUpTo="@+id/mainFragment"
-                app:popUpToInclusive="false" />
+                app:destination="@id/dayDisplayFragment" />
             <action
                 android:id="@+id/action_open_modifyClassroom"
-                app:destination="@id/modifyClassroomFragment"
-                app:popUpTo="@+id/mainFragment"
-                app:popUpToInclusive="false" />
+                app:destination="@id/modifyClassroomFragment" />
         </fragment>
         <fragment
             android:id="@+id/dayDisplayFragment"
@@ -44,9 +37,7 @@
             tools:layout="@layout/fragment_day_display">
             <action
                 android:id="@+id/action_display_period"
-                app:destination="@id/periodDisplayFragment"
-                app:popUpTo="@+id/dayDisplayFragment"
-                app:popUpToInclusive="false" />
+                app:destination="@id/periodDisplayFragment" />
         </fragment>
         <fragment
             android:id="@+id/periodDisplayFragment"
@@ -55,9 +46,7 @@
             tools:layout="@layout/fragment_period_display">
             <action
                 android:id="@+id/action_display_teacher_location"
-                app:destination="@id/teacherLocationDisplayFragment"
-                app:popUpTo="@+id/periodDisplayFragment"
-                app:popUpToInclusive="false" />
+                app:destination="@id/teacherLocationDisplayFragment" />
             <argument
                 android:name="day"
                 app:argType="integer" />
@@ -83,9 +72,7 @@
             tools:layout="@layout/fragment_modify_teacher_location_chooser">
             <action
                 android:id="@+id/action_open_teacherLocationEditor"
-                app:destination="@id/modifyTeacherLocationEditorFragment"
-                app:popUpTo="@+id/modifyTeacherLocationChooserFragment"
-                app:popUpToInclusive="false" />
+                app:destination="@id/modifyTeacherLocationEditorFragment"/>
         </fragment>
         <fragment
             android:id="@+id/modifyTeacherLocationEditorFragment"
@@ -99,7 +86,7 @@
         <action
             android:id="@+id/action_global_settingsFragment"
             app:destination="@id/settingsFragment"
-            app:popUpTo="@+id/innerNav"
-            app:popUpToInclusive="false" />
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_right" />
     </navigation>
 </navigation>

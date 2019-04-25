@@ -1,55 +1,45 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Kanit</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <item name="android:textAppearance">@style/AppTheme.Body2</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionBarTheme">
-            @style/ThemeOverlay.MaterialComponents.Dark.ActionBar.Kanit
-        </item>
-        <item name="materialAlertDialogTheme">
-            @style/ThemeOverlay.MaterialComponents.MaterialAlertDialog.Kanit
-        </item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="actionBarStyle">@style/AppTheme.ActionBar</item>
+        <item name="materialAlertDialogTheme">@style/AppTheme.AlertDialog</item>
     </style>
 
-    <style name="AppTheme.FullScreen" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Kanit</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="materialAlertDialogTheme">
-            @style/ThemeOverlay.MaterialComponents.MaterialAlertDialog.Kanit
-        </item>
-
-        <item name="actionBarTheme">
-            @style/ThemeOverlay.MaterialComponents.Dark.ActionBar.Kanit
-        </item>
-    </style>
-
-    <style name="TextAppearance.MaterialComponents.Caption.Kanit" parent="TextAppearance.MaterialComponents.Caption">
+    <style name="AppTheme.Caption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="fontFamily">@font/kanit_medium</item>
     </style>
 
-    <style name="ThemeOverlay.MaterialComponents.Dark.ActionBar.Kanit" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
-        <item name="fontFamily">@font/kanit</item>
-    </style>
+    <style name="AppTheme.ActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:textAppearance">@font/kanit_semibold</item>
+        <item name="titleTextStyle">@style/AppTheme.ActionBar.TitleText</item>
+        <item name="subtitleTextStyle">@style/AppTheme.ActionBar.SubtitleText</item>
 
-    <style name="ThemeOverlay.MaterialComponents.MaterialAlertDialog.Kanit" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="android:fontFamily">@font/kanit</item>
     </style>
-
-    <style name="TextAppearance.MaterialComponents.Kanit" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:fontFamily">@font/kanit</item>
-    </style>
-
-    <style name="TextAppearance.MaterialComponents.Kanit.Header" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textColor">@color/colorAccent</item>
+    <style name="AppTheme.ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:fontFamily">@font/kanit_semibold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="AppTheme.ActionBar.SubtitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:fontFamily">@font/kanit</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppTheme.AlertDialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:fontFamily">@font/kanit</item>
+    </style>
+
+    <style name="AppTheme.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:fontFamily">@font/kanit</item>
+    </style>
+
+    <style name="AppTheme.Header" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 </resources>

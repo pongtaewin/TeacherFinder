@@ -9,7 +9,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:itemCount="20"
+        tools:listitem="@layout/widget_modify_teacher_location_teacher_detail_display" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addFab"
@@ -20,9 +22,10 @@
         android:fontFamily="@font/kanit"
         android:text="เพิ่มอาจารย์"
         android:textAlignment="center"
+        android:textColor="@color/textColorPrimary"
         android:textSize="18sp"
         android:typeface="normal"
-        app:backgroundTint="@color/colorThemePink"
+        app:backgroundTint="@color/colorThemeBlue"
         app:icon="@drawable/ic_action_add"
         app:layout_anchor="@id/recycler"
         app:layout_anchorGravity="bottom|right" />

@@ -16,10 +16,10 @@
         app:counterEnabled="false"
         app:helperText="วางข้อมูลส่งออกที่ได้รับภายในช่องนี้"
         app:helperTextEnabled="true"
-        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:helperTextTextAppearance="@style/AppTheme.Caption"
         app:hintAnimationEnabled="true"
         app:hintEnabled="true"
-        app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit"
+        app:hintTextAppearance="@style/AppTheme.Caption"
         app:layout_constraintBottom_toTopOf="@+id/location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +34,6 @@
             android:minLines="5"
             android:nestedScrollingEnabled="true"
             android:tag="EditText"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption.Kanit" />
+            android:textAppearance="@style/AppTheme.Caption" />
     </com.google.android.material.textfield.TextInputLayout>
 </FrameLayout>

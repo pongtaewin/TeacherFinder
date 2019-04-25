@@ -6,7 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +56,7 @@ public class TeacherLocationDisplayFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull TeacherDataViewHolder holder, int pos) {
-            TeacherDetail teacherDetail = TeacherLocationDatabase.getInstance().getDetail().valueAt(pos);
+            TeacherDetail teacherDetail = TeacherLocationDatabase.getInstance().getDetailAt(pos);
             holder.teacher.setText(String.format(Locale.getDefault(), "อ. %s", teacherDetail.name));
             holder.v.setBackgroundColor(getResources().getColor(
                     pos % 2 == 0 ? R.color.normalBackground : R.color.tintedBackground));
@@ -61,7 +65,7 @@ public class TeacherLocationDisplayFragment extends Fragment {
             holder.status.setText(teacherLocation != null ?
                     String.format(Locale.getDefault(), "สอนที่ห้อง %s (%s)",
                             teacherLocation.classroom, teacherLocation.location) : "ว่าง");
-            holder.status.setTextColor(getResources().getColor(teacherLocation != null ? android.R.color.holo_red_dark : android.R.color.holo_blue_dark));
+            holder.status.setTextColor(getResources().getColor(teacherLocation != null ? R.color.colorAccent : R.color.textColorPrimary));
         }
 
         @Override
