@@ -42,20 +42,20 @@ public class StaticUtil {
                 case R.id.mainFragment:
                     return "หน้าหลัก";
                 case R.id.dayDisplayFragment:
-                    return "เลือกวันที่";
+                    return "ตารางสอน";
                 case R.id.periodDisplayFragment:
                     int day = arguments.getInt("day");
-                    return "วัน" + new String[]{"จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"}[day - 1];
+                    return "ตารางสอน | วัน" + new String[]{"จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"}[day - 1];
                 case R.id.teacherLocationDisplayFragment:
                     int key = arguments.getInt("key");
-                    return "วัน" + new String[]{"จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"}[key / 10] + " คาบ " + String.valueOf((key % 10) + 1);
+                    return "สถานที่สอน | " + new String[]{"จ.", "อ.", "พ.", "พฤ.", "ศ."}[key / 10] + " คาบ " + ((key % 10) + 1);
                 case R.id.modifyClassroomFragment:
                     return "แก้ไขตารางสอน";
                 case R.id.modifyTeacherLocationChooserFragment:
                     return "รายชื่อครู";
                 case R.id.modifyTeacherLocationEditorFragment:
                     TeacherDetail detail = TeacherLocationDatabase.getInstance().getDetail(arguments.getInt("teacherId"));
-                    return String.format("อ. %s %s", detail.name, detail.surname);
+                    return String.format("แก้ไข | อ. %s %s", detail.name, detail.surname);
                 default:
                     return "แอปพลิเคชัน";
             }
@@ -63,20 +63,6 @@ public class StaticUtil {
             Log.w("StaticUtil", "NPE caught at getTitleText()");
             Log.w("StaticUtil", "Returning null.");
             return null;
-        }
-    }
-
-    @Nullable
-    public static String getSubtitleText(@IdRes int id) {
-        switch (id) {
-            case R.id.periodDisplayFragment:
-                return "ตารางสอน";
-            case R.id.teacherLocationDisplayFragment:
-                return "สถานที่สอน";
-            case R.id.modifyTeacherLocationEditorFragment:
-                return "แก้ไขสถานที่สอน";
-            default:
-                return null;
         }
     }
 

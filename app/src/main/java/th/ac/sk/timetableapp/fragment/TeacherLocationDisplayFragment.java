@@ -6,11 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
-import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,7 +55,7 @@ public class TeacherLocationDisplayFragment extends Fragment {
             TeacherDetail teacherDetail = TeacherLocationDatabase.getInstance().getDetailAt(pos);
             holder.teacher.setText(String.format(Locale.getDefault(), "อ. %s", teacherDetail.name));
             holder.v.setBackgroundColor(getResources().getColor(
-                    pos % 2 == 0 ? R.color.normalBackground : R.color.tintedBackground));
+                    pos % 2 == 0 ? R.color.colorBackground : R.color.colorBackgroundTint));
 
             TeacherLocation teacherLocation = TeacherLocationDatabase.getInstance().getLocation(teacherDetail.id, key);
             holder.status.setText(teacherLocation != null ?
@@ -78,7 +74,7 @@ public class TeacherLocationDisplayFragment extends Fragment {
             super.onViewAttachedToWindow(holder);
             rv.setBackgroundColor(getResources().getColor(
                     TeacherLocationDatabase.getTeacherCount() % 2 == 0 ?
-                            R.color.normalBackground : R.color.tintedBackground));
+                            R.color.colorBackground : R.color.colorBackgroundTint));
         }
     }
 

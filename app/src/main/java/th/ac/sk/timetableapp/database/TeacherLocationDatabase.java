@@ -370,7 +370,7 @@ public class TeacherLocationDatabase {
         Set<Integer> positionSet = TeacherLocationDatabase.getInstance().getDetail().keySet();
         Iterator<Integer> it = positionSet.iterator();
         int key = 1;
-        for (int i = 0; i < pos; i++) if (it.hasNext()) key = it.next();
+        for (int i = 0; i < pos+1; i++) if (it.hasNext()) key = it.next();
         return TeacherLocationDatabase.getInstance().getDetail(key);
     }
 

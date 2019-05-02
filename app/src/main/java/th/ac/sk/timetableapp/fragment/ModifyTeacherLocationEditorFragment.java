@@ -165,7 +165,7 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
             void setupData(final ModifyTeacherLocationData data) {
                 location = data.location;
 
-                periodTV.setText(String.format(Locale.getDefault(), "คาบที่ %d :", (location.key % 10) + 1));
+                periodTV.setText(String.format(Locale.getDefault(), "%d)", (location.key % 10) + 1));
                 boolean occupied = !(location.classroom == null || location.location == null);
                 statusTV.setText(occupied ? String.format(Locale.getDefault(), "สอนที่ห้อง %s (%s)", location.classroom, location.location) : "ว่าง");
                 statusTV.setTextColor(StaticUtil.resources.getColor(occupied ? R.color.colorAccent : R.color.textColorPrimary));

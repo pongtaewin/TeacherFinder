@@ -1,286 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="@dimen/cardCornerRadius"
-    app:cardElevation="@dimen/cardElevation">
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:minWidth="180dp"
-        android:visibility="visible"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="@dimen/cardCornerRadius"
+        app:cardElevation="@dimen/cardElevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.25" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/noClass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="teacherList,location,tag1,tag2" />
-
-        <FrameLayout
-            android:id="@+id/divider2"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/banner">
-
-        </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_max="500dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/banner"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorFriday"
-            android:gravity="center"
-            android:orientation="vertical"
             android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/header"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/kanit_medium"
-                android:gravity="center"
-                android:maxLines="2"
-                android:text="การงานอาชีพและเทคโนโลยี 2"
-                android:textAlignment="center"
-                android:textColor="@color/textColorSpecial"
-                android:textSize="24sp"
-                android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@id/room"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_goneMarginBottom="8dp" />
-
-            <TextView
-                android:id="@+id/room"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/noClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:constraint_referenced_ids="teacherList,location,tag1,tag2" />
+
+            <FrameLayout
+                android:id="@+id/divider2"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/kanit_semibold"
-                android:text="เรียนที่ 4411"
+                android:layout_marginBottom="16dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/banner">
+
+            </FrameLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/banner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorFriday"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/header"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/kanit_medium"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="การงานอาชีพและเทคโนโลยี 2"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColorSpecial"
+                    android:textSize="18sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@id/room"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_goneMarginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/kanit_semibold"
+                    android:text="เรียนที่ 4411"
+                    android:textColor="@color/textColorSpecial"
+                    android:textSize="14sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/header" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/periodNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/kanit_medium"
+                android:foregroundGravity="center"
                 android:textColor="@color/textColorSpecial"
-                android:textSize="18sp"
+                android:textSize="30sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tag"
+                app:layout_constraintStart_toStartOf="@+id/tag"
+                app:layout_constraintTop_toBottomOf="@+id/tag"
+                tools:text="10" />
+
+            <TextView
+                android:id="@+id/teacherList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/kanit"
+                android:text="ปิยมาศ, ปิยาภรณ์, ยลกร, ธนกร, บัญชาพร, อัญชานา, หาดพัทยานานา, บานาน่าโบ้ท"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@id/barrier"
+                app:layout_constraintTop_toBottomOf="@+id/banner" />
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/kanit"
+                android:text="TextView"
+                android:textColor="@color/textColorSecondary"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/dataNormal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier"
+                app:layout_constraintTop_toBottomOf="@+id/teacherList" />
+
+            <TextView
+                android:id="@+id/dataNormal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/kanit"
+                android:text="ประยุทธ์ จันทร์โอชา"
+                android:textColor="@color/textColorSecondary"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/dataReduced"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier"
+                app:layout_constraintTop_toBottomOf="@+id/location" />
+
+            <TextView
+                android:id="@+id/dataReduced"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/kanit"
+                android:text="23:00 - 24:00 น."
+                android:textColor="@color/textColorSecondary"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/barrier"
+                app:layout_constraintTop_toBottomOf="@+id/dataNormal" />
+
+            <TextView
+                android:id="@+id/tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/kanit_semibold"
+                android:text="คาบที่"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="20sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/periodNum"
+                app:layout_constraintEnd_toStartOf="@+id/divider2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/header" />
+                app:layout_constraintTop_toBottomOf="@+id/dayTag" />
+
+            <TextView
+                android:id="@+id/tag1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/kanit_medium"
+                android:text="อ.ผู้สอน"
+                android:textColor="@color/textColorPrimary"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/teacherList"
+                app:layout_constraintStart_toEndOf="@+id/divider2"
+                app:layout_constraintTop_toTopOf="@+id/teacherList" />
+
+            <TextView
+                android:id="@+id/tag2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/kanit_medium"
+                android:text="รหัส"
+                android:textColor="@color/textColorPrimary"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/location"
+                app:layout_constraintStart_toEndOf="@+id/divider2"
+                app:layout_constraintTop_toTopOf="@+id/location" />
+
+            <TextView
+                android:id="@+id/tag3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/kanit_medium"
+                android:text="คาบปกติ"
+                android:textColor="@color/textColorPrimary"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/dataNormal"
+                app:layout_constraintStart_toEndOf="@+id/divider2"
+                app:layout_constraintTop_toTopOf="@+id/dataNormal" />
+
+            <TextView
+                android:id="@+id/tag4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/kanit_medium"
+                android:text="คาบร่น"
+                android:textColor="@color/textColorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/dataReduced"
+                app:layout_constraintStart_toEndOf="@+id/divider2"
+                app:layout_constraintTop_toTopOf="@+id/dataReduced" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="tag1,tag2,tag3,tag4"
+                tools:layout_editor_absoluteX="411dp" />
+
+            <TextView
+                android:id="@+id/dayTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/kanit_semibold"
+                android:text="พฤหัสฯ"
+                android:textColor="@color/textColorSecondary"
+                app:layout_constraintBottom_toTopOf="@+id/tag"
+                app:layout_constraintEnd_toEndOf="@+id/tag"
+                app:layout_constraintStart_toStartOf="@+id/tag"
+                app:layout_constraintTop_toBottomOf="@+id/banner"
+                app:layout_constraintVertical_chainStyle="packed" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <TextView
-            android:id="@+id/periodNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/kanit"
-            android:foregroundGravity="center"
-            android:textColor="@color/textColorSpecial"
-            android:textSize="44sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tag"
-            app:layout_constraintStart_toStartOf="@+id/tag"
-            app:layout_constraintTop_toBottomOf="@+id/tag"
-            tools:text="10" />
-
-        <TextView
-            android:id="@+id/teacherList"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/kanit"
-            android:text="ปิยมาศ, ปิยาภรณ์, ยลกร, ธนกร, บัญชาพร, อัญชานา, หาดพัทยานานา, บานาน่าโบ้ท"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="14sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@id/barrier"
-            app:layout_constraintTop_toBottomOf="@+id/banner" />
-
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/kanit"
-            android:text="TextView"
-            android:textColor="@color/textColorSecondary"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/dataNormal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/barrier"
-            app:layout_constraintTop_toBottomOf="@+id/teacherList" />
-
-        <TextView
-            android:id="@+id/dataNormal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/kanit"
-            android:text="ประยุทธ์ จันทร์โอชา"
-            android:textColor="@color/textColorSecondary"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/dataReduced"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/barrier"
-            app:layout_constraintTop_toBottomOf="@+id/location" />
-
-        <TextView
-            android:id="@+id/dataReduced"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/kanit"
-            android:text="23:00 - 24:00 น."
-            android:textColor="@color/textColorSecondary"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/barrier"
-            app:layout_constraintTop_toBottomOf="@+id/dataNormal" />
-
-        <TextView
-            android:id="@+id/tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/kanit_medium"
-            android:text="คาบที่"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="24sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/periodNum"
-            app:layout_constraintEnd_toStartOf="@+id/divider2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dayTag" />
-
-        <TextView
-            android:id="@+id/tag1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/kanit_medium"
-            android:text="อ.ผู้สอน"
-            android:textColor="@color/textColorPrimary"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/teacherList"
-            app:layout_constraintStart_toEndOf="@+id/divider2"
-            app:layout_constraintTop_toTopOf="@+id/teacherList" />
-
-        <TextView
-            android:id="@+id/tag2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/kanit_medium"
-            android:text="รหัส"
-            android:textColor="@color/textColorPrimary"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/location"
-            app:layout_constraintStart_toEndOf="@+id/divider2"
-            app:layout_constraintTop_toTopOf="@+id/location" />
-
-        <TextView
-            android:id="@+id/tag3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/kanit_medium"
-            android:text="คาบปกติ"
-            android:textColor="@color/textColorPrimary"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/dataNormal"
-            app:layout_constraintStart_toEndOf="@+id/divider2"
-            app:layout_constraintTop_toTopOf="@+id/dataNormal" />
-
-        <TextView
-            android:id="@+id/tag4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/kanit_medium"
-            android:text="คาบร่น"
-            android:textColor="@color/textColorPrimary"
-            app:layout_constraintBottom_toBottomOf="@+id/dataReduced"
-            app:layout_constraintStart_toEndOf="@+id/divider2"
-            app:layout_constraintTop_toTopOf="@+id/dataReduced" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="end"
-            app:constraint_referenced_ids="tag1,tag2,tag3,tag4"
-            tools:layout_editor_absoluteX="411dp" />
-
-        <TextView
-            android:id="@+id/dayTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/kanit_semibold"
-            android:text="พฤหัสฯ"
-            android:textColor="@color/textColorSecondary"
-            app:layout_constraintBottom_toTopOf="@+id/tag"
-            app:layout_constraintEnd_toEndOf="@+id/tag"
-            app:layout_constraintStart_toStartOf="@+id/tag"
-            app:layout_constraintTop_toBottomOf="@+id/banner"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

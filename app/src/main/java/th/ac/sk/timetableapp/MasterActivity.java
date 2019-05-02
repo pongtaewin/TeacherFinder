@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.Collections;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,7 +33,6 @@ public class MasterActivity extends AppCompatActivity {
             int id = Objects.requireNonNull(navController.getCurrentDestination()).getId();
 
             actionBar.setTitle(StaticUtil.getTitleText(id, arguments));
-            actionBar.setSubtitle(StaticUtil.getSubtitleText(id));
             invalidateOptionsMenu();
 
             hideSettings = id == R.id.settingsFragment;

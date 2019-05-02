@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="th.ac.sk.timetableapp.fragment.DayDisplayFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@color/colorBackground"
+    tools:context="th.ac.sk.timetableapp.fragment.DayDisplayFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/c1"
@@ -13,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        
+
         android:tag="1"
         android:transitionName="c1"
         app:cardCornerRadius="@dimen/cardCornerRadius"
@@ -42,7 +43,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        
+
         android:tag="2"
         android:transitionName="c2"
         app:cardCornerRadius="@dimen/cardCornerRadius"
@@ -70,7 +71,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        
+
         android:tag="3"
         android:transitionName="c3"
         app:cardCornerRadius="@dimen/cardCornerRadius"
@@ -98,7 +99,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        
+
         android:tag="4"
         android:transitionName="c4"
         app:cardCornerRadius="@dimen/cardCornerRadius"
@@ -127,7 +128,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        
+
         android:tag="5"
         android:transitionName="c5"
         app:cardCornerRadius="@dimen/cardCornerRadius"

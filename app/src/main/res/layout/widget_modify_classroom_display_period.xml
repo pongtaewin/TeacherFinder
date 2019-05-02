@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/kanit_semibold"
+        android:gravity="center|right"
         android:text="10)"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         android:textSize="18sp"

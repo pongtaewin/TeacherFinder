@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context="th.ac.sk.timetableapp.fragment.ModifyTeacherLocationChooserFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackground"
         tools:itemCount="20"
         tools:listitem="@layout/widget_modify_teacher_location_teacher_detail_display" />
 

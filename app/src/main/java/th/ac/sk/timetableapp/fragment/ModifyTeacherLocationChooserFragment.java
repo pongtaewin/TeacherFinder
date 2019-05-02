@@ -1,7 +1,7 @@
 package th.ac.sk.timetableapp.fragment;
 
 import android.os.Bundle;
-import android.util.SparseArray;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +23,6 @@ import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
 import th.ac.sk.timetableapp.model.TeacherDetail;
-import th.ac.sk.timetableapp.model.TeacherLocation;
 import th.ac.sk.timetableapp.tool.DialogBuilder;
 
 public class ModifyTeacherLocationChooserFragment extends Fragment {
@@ -94,6 +93,7 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+                Log.w("TAG","TeacherId = "+teacherId);
                 openEditor(Navigation.findNavController(v), teacherId);
             }
         }
@@ -147,7 +147,7 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
             VH.text.setText(String.format(Locale.getDefault(), "อ. %s %s", data.name, data.surname));
 
             VH.view.setBackgroundColor(getResources().getColor(
-                    pos % 2 == 0 ? R.color.normalBackground : R.color.tintedBackground));
+                    pos % 2 == 0 ? R.color.colorBackground : R.color.colorBackgroundTint));
             VH.view.setOnClickListener(new TeacherListener.Click(data.id));
             VH.view.setOnLongClickListener(new TeacherListener.LongClick(data.id, fragment));
         }
@@ -161,7 +161,7 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
         public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
             rv.setBackgroundColor(getResources().getColor(
                     TeacherLocationDatabase.getTeacherCount() % 2 == 0 ?
-                            R.color.normalBackground : R.color.tintedBackground));
+                            R.color.colorBackground : R.color.colorBackgroundTint));
         }
     }
 }
