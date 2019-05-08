@@ -190,12 +190,12 @@ public class DataParser {
 
     public static String extractPeriodFromPackedString(String data) {
         JsonObject object = new JsonParser().parse(data).getAsJsonObject();
-        return object.getAsJsonObject("period").getAsString();
+        return new Gson().toJson(object.getAsJsonArray("period"));
     }
 
     public static String extractTeacherLocationFromPackedString(String data) {
         JsonObject object = new JsonParser().parse(data).getAsJsonObject();
-        return object.getAsJsonObject("teacherLocation").getAsString();
+        return new Gson().toJson(object.getAsJsonObject("teacherLocation"));
     }
 
     public static class TeacherLocationDatabaseFormat {
