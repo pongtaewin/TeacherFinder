@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.JsonObject;
+
 public class Period {
     public int type;
     public String subject = null;
@@ -53,6 +55,29 @@ public class Period {
         return type == Type.HAVE_CLASS && (
                 subject == null || subjectCode == null || teacherList == null || room == null
                         || periodNum <= 0 || periodNum > 10);
+    }
+
+    public JsonObject toJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("t", type);
+        obj.addProperty("s", subject);
+        obj.addProperty("c", subjectCode);
+        obj.addProperty("l", type);
+        obj.addProperty("r", room);
+        obj.addProperty("n", periodNum);
+        return obj;
+    }
+
+    public static Period fromJson(JsonObject o) {
+        int t = o.get("t").getAsInt();
+        if (t == Type.HAVE_CLASS)
+            return new Period(
+                    o.get("s").getAsString(),
+                    o.get("c").getAsString(),
+                    o.get("l").getAsString(),
+                    o.get("r").getAsString(),
+                    o.get("n").getAsInt());
+        return new Period(t, o.get("n").getAsInt());
     }
 
     public static class Type {

@@ -1,9 +1,11 @@
 package th.ac.sk.timetableapp.model;
 
+import com.google.gson.JsonObject;
+
 public class TeacherDetail implements Comparable<TeacherDetail> {
+    public int id;
     public String name;
     public String surname;
-    public int id;
 
     public TeacherDetail(int id, String name, String surname) {
         this.id=id;
@@ -20,5 +22,20 @@ public class TeacherDetail implements Comparable<TeacherDetail> {
         v = this.name.compareTo(detail.name);
         if (v == 0) v = this.surname.compareTo(detail.surname);
         return v;
+    }
+
+    public JsonObject toJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("i", id);
+        obj.addProperty("n", name);
+        obj.addProperty("s", surname);
+        return obj;
+    }
+
+    public static TeacherDetail fromJson(JsonObject o) {
+        return new TeacherDetail(
+                o.get("i").getAsInt(),
+                o.get("n").getAsString(),
+                o.get("s").getAsString());
     }
 }

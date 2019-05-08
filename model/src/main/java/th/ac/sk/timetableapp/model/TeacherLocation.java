@@ -2,6 +2,8 @@ package th.ac.sk.timetableapp.model;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.JsonObject;
+
 public class TeacherLocation implements Comparable<TeacherLocation> {
     public int teacherId;
     public String classroom = null;
@@ -28,5 +30,24 @@ public class TeacherLocation implements Comparable<TeacherLocation> {
         int v = Integer.compare(this.teacherId, o.teacherId);
         if (v == 0) return Integer.compare(this.key, o.key);
         return v;
+    }
+
+    public JsonObject toJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("i", teacherId);
+        obj.addProperty("c", classroom);
+        obj.addProperty("l", location);
+        obj.addProperty("k", key);
+        return obj;
+    }
+
+    public static TeacherLocation fromJson(JsonObject o) {
+        if (o.get("c").isJsonNull())
+            return new TeacherLocation(o.get("i").getAsInt(), o.get("k").getAsInt());
+        return new TeacherLocation(
+                o.get("i").getAsInt(),
+                o.get("c").getAsString(),
+                o.get("l").getAsString(),
+                o.get("k").getAsInt());
     }
 }

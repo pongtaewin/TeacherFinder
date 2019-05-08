@@ -7,11 +7,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -42,9 +40,9 @@ public class DataParser {
     private static HashMap<Integer, Period> parsePeriod(@NonNull JsonArray dataAsJson) throws JsonParseException {
         HashMap<Integer, Period> result = new HashMap<>();
         for (JsonElement jsonElement : dataAsJson) {
-            JsonObject obj = jsonElement.getAsJsonObject().getAsJsonObject("data");
-            int key = obj.get("key").getAsInt();
-            Period period = new Gson().fromJson(obj.get("period"), Period.class);
+            JsonObject obj = jsonElement.getAsJsonObject().getAsJsonObject("d");
+            int key = obj.get("k").getAsInt();
+            Period period = Period.fromJson(obj.getAsJsonObject("p"));
             result.put(key, period);
         }
         return result;
@@ -56,9 +54,9 @@ public class DataParser {
             for (HashMap.Entry<Integer, Period> periodHash : data.entrySet()) {
                 JsonObject obj = new JsonObject();
                 JsonObject innerObj = new JsonObject();
-                innerObj.addProperty("key", periodHash.getKey());
-                innerObj.add("period", new JsonParser().parse(new Gson().toJson(periodHash.getValue())));
-                obj.add("data", innerObj);
+                innerObj.addProperty("k", periodHash.getKey());
+                innerObj.add("p", periodHash.getValue().toJson());
+                obj.add("d", innerObj);
                 jsonArray.add(obj);
             }
             return new Gson().toJson(jsonArray);
@@ -88,8 +86,8 @@ public class DataParser {
     }
 
     private static TeacherLocationDatabaseFormat parseTeacherLocation(@NonNull JsonObject dataAsJson) throws JsonParseException {
-        JsonArray teacherLocationJson = dataAsJson.getAsJsonArray("teacherLocation");
-        JsonArray teacherDetailJson = dataAsJson.getAsJsonArray("teacherDetail");
+        JsonArray teacherLocationJson = dataAsJson.getAsJsonArray("l");
+        JsonArray teacherDetailJson = dataAsJson.getAsJsonArray("d");
         return new TeacherLocationDatabaseFormat(
                 parseTeacherLocationFromJson(teacherLocationJson),
                 parseTeacherDetailFromJson(teacherDetailJson));
@@ -107,10 +105,10 @@ public class DataParser {
         }
     }
 
-    private static String extractTeacherLocation(JsonArray locationJson, JsonArray teacherDetailJson) {
+    private static String extractTeacherLocation(JsonArray locationJson, JsonArray detailJson) {
         JsonObject result = new JsonObject();
-        result.add("teacherLocation", locationJson);
-        result.add("teacherDetail", teacherDetailJson);
+        result.add("l", locationJson);
+        result.add("d", detailJson);
         return extractTeacherLocation(result);
     }
 
@@ -122,8 +120,8 @@ public class DataParser {
         HashMap<Integer, TeacherDetail> result = new HashMap<>();
         for (JsonElement element : teacherDetailJson) {
             JsonObject object = element.getAsJsonObject();
-            int key = object.get("key").getAsInt();
-            TeacherDetail value = new Gson().fromJson(object.get("value"), TeacherDetail.class);
+            int key = object.get("k").getAsInt();
+            TeacherDetail value = TeacherDetail.fromJson(object.getAsJsonObject("v"));
             result.put(key, value);
         }
         return result;
@@ -133,13 +131,13 @@ public class DataParser {
         HashMap<Integer, HashMap<Integer, TeacherLocation>> result = new HashMap<>();
         for (JsonElement element : teacherLocationJson) {
             JsonObject object = element.getAsJsonObject();
-            int key = object.get("key").getAsInt();
-            JsonArray innerTeacherLocationJson = object.getAsJsonArray("value");
+            int key = object.get("k").getAsInt();
+            JsonArray innerTeacherLocationJson = object.getAsJsonArray("v");
             HashMap<Integer, TeacherLocation> innerResult = new HashMap<>();
             for (JsonElement innerElement : innerTeacherLocationJson) {
                 JsonObject innerObject = innerElement.getAsJsonObject();
-                int innerKey = innerObject.get("key").getAsInt();
-                TeacherLocation value = new Gson().fromJson(innerObject.get("value"), TeacherLocation.class);
+                int innerKey = innerObject.get("k").getAsInt();
+                TeacherLocation value = TeacherLocation.fromJson(innerObject.getAsJsonObject("v"));
                 innerResult.put(innerKey, value);
             }
             result.put(key, innerResult);
@@ -151,8 +149,8 @@ public class DataParser {
         JsonArray result = new JsonArray();
         for (HashMap.Entry<Integer, TeacherDetail> detailHash : detail.entrySet()) {
             JsonObject object = new JsonObject();
-            object.addProperty("key", detailHash.getKey());
-            object.add("value", new JsonParser().parse(new Gson().toJson(detailHash.getValue())));
+            object.addProperty("k", detailHash.getKey());
+            object.add("v", detailHash.getValue().toJson());
             result.add(object);
         }
         return result;
@@ -162,16 +160,16 @@ public class DataParser {
         JsonArray result = new JsonArray();
         for (HashMap.Entry<Integer, HashMap<Integer, TeacherLocation>> locationHash : location.entrySet()) {
             JsonObject object = new JsonObject();
-            object.addProperty("key", locationHash.getKey());
+            object.addProperty("k", locationHash.getKey());
             HashMap<Integer, TeacherLocation> innerLocation = locationHash.getValue();
             JsonArray innerResult = new JsonArray();
             for (HashMap.Entry<Integer, TeacherLocation> innerLocationHash : innerLocation.entrySet()) {
                 JsonObject innerObject = new JsonObject();
-                innerObject.addProperty("key", innerLocationHash.getKey());
-                innerObject.add("value", new JsonParser().parse(new Gson().toJson(innerLocationHash.getValue())));
+                innerObject.addProperty("k", innerLocationHash.getKey());
+                innerObject.add("v", innerLocationHash.getValue().toJson());
                 innerResult.add(innerObject);
             }
-            object.add("value", innerResult);
+            object.add("v", innerResult);
             result.add(object);
         }
         return result;
@@ -183,19 +181,19 @@ public class DataParser {
 
     public static String packString(String period, String teacherLocation) {
         JsonObject object = new JsonObject();
-        object.add("period", new JsonParser().parse(period));
-        object.add("teacherLocation", new JsonParser().parse(teacherLocation));
+        object.add("p", new JsonParser().parse(period));
+        object.add("t", new JsonParser().parse(teacherLocation));
         return new Gson().toJson(object);
     }
 
     public static String extractPeriodFromPackedString(String data) {
         JsonObject object = new JsonParser().parse(data).getAsJsonObject();
-        return new Gson().toJson(object.getAsJsonArray("period"));
+        return new Gson().toJson(object.getAsJsonArray("p"));
     }
 
     public static String extractTeacherLocationFromPackedString(String data) {
         JsonObject object = new JsonParser().parse(data).getAsJsonObject();
-        return new Gson().toJson(object.getAsJsonObject("teacherLocation"));
+        return new Gson().toJson(object.getAsJsonObject("t"));
     }
 
     public static class TeacherLocationDatabaseFormat {
@@ -223,5 +221,4 @@ public class DataParser {
             this.teacherDetail = teacherDetail;
         }
     }
-
 }
