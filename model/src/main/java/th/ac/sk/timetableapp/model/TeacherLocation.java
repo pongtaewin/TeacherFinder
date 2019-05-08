@@ -2,7 +2,7 @@ package th.ac.sk.timetableapp.model;
 
 import androidx.annotation.NonNull;
 
-public class TeacherLocation {
+public class TeacherLocation implements Comparable<TeacherLocation> {
     public int teacherId;
     public String classroom = null;
     public String location = null;
@@ -23,4 +23,10 @@ public class TeacherLocation {
     }
 
 
+    @Override
+    public int compareTo(TeacherLocation o) {
+        int v = Integer.compare(this.teacherId, o.teacherId);
+        if (v == 0) return Integer.compare(this.key, o.key);
+        return v;
+    }
 }
