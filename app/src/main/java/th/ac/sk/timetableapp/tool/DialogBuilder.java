@@ -2,10 +2,17 @@ package th.ac.sk.timetableapp.tool;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -13,16 +20,13 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
+import th.ac.sk.timetableapp.MasterActivity;
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.ImportExportUtil;
 import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
-import th.ac.sk.timetableapp.model.TeacherDetail;
 import th.ac.sk.timetableapp.fragment.ModifyTeacherLocationChooserFragment;
+import th.ac.sk.timetableapp.model.TeacherDetail;
 
 
 public abstract class DialogBuilder {
@@ -79,8 +83,12 @@ public abstract class DialogBuilder {
                 .setPositiveButton("เรียบร้อย", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        boolean success = ImportExportUtil.importData(Objects.requireNonNull(text.getText()).toString());
-                        Snackbar.make(activity.findViewById(android.R.id.content), success ? "นำเข้าข้อมูลสำเร็จ" : "นำเข้าข้อมูลไม่สำเร็จ", Snackbar.LENGTH_LONG).show();
+                        Intent intent = ImportExportUtil.importData(Objects.requireNonNull(text.getText()).toString());
+                        if (intent != null) {
+                            intent.setComponent(new ComponentName(activity, MasterActivity.class));
+                            activity.startActivityForResult(intent, MasterActivity.REQUEST_IMPORT);
+                        } else
+                            Snackbar.make(activity.findViewById(android.R.id.content), "นำเข้าข้อมูลไม่สำเร็จ", Snackbar.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
@@ -109,8 +117,8 @@ public abstract class DialogBuilder {
     public static AlertDialog getExportDataDialog(@NonNull final Activity activity) {
         return new MaterialAlertDialogBuilder(activity, R.style.AppTheme_AlertDialog)
                 .setTitle("ต้องการส่งออกข้อมูลหรือไม่")
-                .setView(inflateDialogMessage(activity, "คุณจะได้ข้อมูลในรูปแบบตัวอักษร เพื่อใช้สำหรับการนำเข้าในโทรศัพท์อื่นๆ " +
-                        "ถ้าต้องการนำเข้าข้อมูล ให้มาที่หน้านี้ แล้วเลือก \"นำเข้าข้อมูล\""))
+                .setView(inflateDialogMessage(activity, "คุณจะได้ข้อความชุดหนึ่ง เพื่อใช้สำหรับการนำเข้าข้อมูลในโทรศัพท์อื่นๆ " +
+                        "ถ้าต้องการนำเข้าข้อมูล ให้คัดลอกข้อความดังกล่าว แล้วใส่ในหน้า \"นำเข้าข้อมูล\""))
                 .setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

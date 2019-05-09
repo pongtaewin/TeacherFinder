@@ -7,10 +7,11 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.File;
-
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
+
+import java.io.File;
+
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.SplashScreenActivity;
 import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
@@ -56,6 +57,8 @@ public class StaticUtil {
                 case R.id.modifyTeacherLocationEditorFragment:
                     TeacherDetail detail = TeacherLocationDatabase.getInstance().getDetail(arguments.getInt("teacherId"));
                     return String.format("แก้ไข | อ. %s %s", detail.name, detail.surname);
+                case R.id.importCheckFragment:
+                    return "ตรวจสอบข้อมูลนำเข้า";
                 default:
                     return "แอปพลิเคชัน";
             }

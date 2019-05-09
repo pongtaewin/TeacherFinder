@@ -62,7 +62,7 @@ public class Period {
         obj.addProperty("t", type);
         obj.addProperty("s", subject);
         obj.addProperty("c", subjectCode);
-        obj.addProperty("l", type);
+        obj.addProperty("l", teacherList);
         obj.addProperty("r", room);
         obj.addProperty("n", periodNum);
         return obj;

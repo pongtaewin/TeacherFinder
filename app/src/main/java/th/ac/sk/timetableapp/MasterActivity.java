@@ -1,11 +1,10 @@
 package th.ac.sk.timetableapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,25 +16,44 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import th.ac.sk.timetableapp.database.DataSaveHandler;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.Objects;
+
+import th.ac.sk.timetableapp.tool.InstantiateHelper;
 import th.ac.sk.timetableapp.tool.StaticUtil;
 
 public class MasterActivity extends AppCompatActivity {
 
     public static final String SPLASH_SCREEN_ALREADY = "splashScreenAlready";
+    public static final int REQUEST_IMPORT = 99;
+    public static final int RESULT_IMPORT_SUCCESS = 138;
+    public static final int RESULT_IMPORT_FAIL = 934;
+    public static boolean showImportSuccessText = false;
     public static boolean hideSettings = false;
     public NavController navController;
     public ActionBar actionBar;
+    private int currentDestinationId = -1;
+    private int previousDestinationId = -1;
 
     NavController.OnDestinationChangedListener listener = new NavController.OnDestinationChangedListener() {
         @Override
         public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-            int id = Objects.requireNonNull(navController.getCurrentDestination()).getId();
+            currentDestinationId = Objects.requireNonNull(navController.getCurrentDestination()).getId();
 
-            actionBar.setTitle(StaticUtil.getTitleText(id, arguments));
+            actionBar.setTitle(StaticUtil.getTitleText(currentDestinationId, arguments));
             invalidateOptionsMenu();
 
-            hideSettings = id == R.id.settingsFragment;
+            if (currentDestinationId == R.id.mainFragment && previousDestinationId == R.id.importCheckFragment) {
+                setResult(RESULT_IMPORT_FAIL);
+                finish();
+                return;
+            }
+
+            hideSettings = currentDestinationId == R.id.settingsFragment || currentDestinationId == R.id.importCheckFragment;
+            previousDestinationId = currentDestinationId;
         }
     };
 
@@ -44,8 +62,7 @@ public class MasterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master);
 
-        StaticUtil.getInstance().applyContext(this);
-        DataSaveHandler.getInstance();
+        InstantiateHelper.instantiate(this);
 
         actionBar = Objects.requireNonNull(getSupportActionBar());
 
@@ -55,7 +72,7 @@ public class MasterActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController,
                 new AppBarConfiguration.Builder(R.id.mainFragment).setFallbackOnNavigateUpListener(new AppBarConfiguration.OnNavigateUpListener() {
                     @Override
-                    public boolean onNavigateUp(){
+                    public boolean onNavigateUp() {
                         return navController.popBackStack();
                     }
                 }).build());
@@ -63,6 +80,17 @@ public class MasterActivity extends AppCompatActivity {
 
         if (savedInstanceState == null || !savedInstanceState.getBoolean(SPLASH_SCREEN_ALREADY, false))
             StaticUtil.showSplashScreen(this);
+
+        handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (showImportSuccessText) {
+            Snackbar.make(findViewById(android.R.id.content), "นำเข้าข้อมูลสำเร็จ", Snackbar.LENGTH_LONG).show();
+            showImportSuccessText = false;
+        }
     }
 
     @Override
@@ -110,5 +138,31 @@ public class MasterActivity extends AppCompatActivity {
     @Override
     public boolean onNavigateUpFromChild(Activity child) {
         return super.onNavigateUpFromChild(child);
+    }
+
+    public void handleIntent(Intent intent) {
+        String action = intent.getAction();
+        if (Objects.equals(action, Intent.ACTION_VIEW)) {
+            Bundle args = new Bundle();
+            args.putString("time", new SimpleDateFormat("d MMM yyyy H:mm", new Locale("th", "TH")).format(intent.getLongExtra("t", 0)));
+            args.putString("data", intent.getStringExtra("d"));
+            args.putString("prefix", intent.getStringExtra("p"));
+            if (currentDestinationId != R.id.importCheckFragment)
+                navController.navigate(R.id.action_import_check, args);
+        }
+    }
+
+    @SuppressWarnings("SwitchStatementWithTooFewBranches")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_IMPORT:
+                switch (resultCode) {
+                    case RESULT_IMPORT_SUCCESS:
+                        showImportSuccessText = true;
+                        navController.navigateUp();
+                }
+        }
     }
 }

@@ -59,11 +59,11 @@ public class DataSaveHandler {
         savePeriod(PeriodDatabase.getInstance().getPeriod());
     }
 
-    public static boolean importPeriodData(String saveData, boolean check) {
+    public static boolean importPeriodData(String saveData, boolean apply) {
         boolean success = false;
         try {
             success = loadPeriod(saveData).size() == 50;
-            if (check) {
+            if (apply) {
                 savePeriod(saveData);
                 loadCurrentPeriodData();
             }
@@ -119,11 +119,11 @@ public class DataSaveHandler {
         return SharedPreferencesHelper.get(DATA_TEACHER_LOCATION);
     }
 
-    public static boolean importTeacherLocationData(String saveData, boolean check) {
+    public static boolean importTeacherLocationData(String saveData, boolean apply) {
         boolean success = false;
         try {
             success = TeacherLocationDatabase.checkIfCorrectlyImported(loadTeacherLocation(saveData));
-            if (check) {
+            if (apply) {
                 saveTeacherLocation(saveData);
                 loadTeacherLocation();
             }

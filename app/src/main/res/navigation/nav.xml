@@ -88,5 +88,13 @@
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_right" />
+        <action
+            android:id="@+id/action_import_check"
+            app:destination="@+id/importCheckFragment" />
     </navigation>
+    <fragment
+        android:id="@+id/importCheckFragment"
+        android:name="th.ac.sk.timetableapp.fragment.ImportCheckFragment"
+        android:label="ImportCheckFragment"
+        tools:layout="@layout/fragment_import_check" />
 </navigation>

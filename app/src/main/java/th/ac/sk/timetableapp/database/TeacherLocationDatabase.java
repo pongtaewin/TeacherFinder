@@ -3,17 +3,14 @@ package th.ac.sk.timetableapp.database;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeMap;
-
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
 
 import th.ac.sk.timetableapp.model.TeacherDetail;
 import th.ac.sk.timetableapp.model.TeacherLocation;
