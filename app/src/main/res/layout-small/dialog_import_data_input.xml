@@ -7,7 +7,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/classroom"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="240dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="ข้อมูลที่ต้องการนำเข้า"
@@ -30,10 +30,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:maxLines="5"
-            android:minLines="5"
+            android:maxLines="4"
+            android:minLines="4"
             android:nestedScrollingEnabled="true"
             android:tag="EditText"
-            android:textAppearance="@style/AppTheme.Caption" />
+            android:textAppearance="@style/AppTheme.Caption"
+            android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
 </FrameLayout>
