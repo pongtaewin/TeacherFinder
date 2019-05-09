@@ -9,7 +9,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/a"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="600dp"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="ชื่อ"
@@ -35,13 +35,13 @@
             android:gravity="top"
             android:nestedScrollingEnabled="true"
             android:tag="EditText"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/b"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="600dp"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="นามสกุล"
@@ -65,7 +65,7 @@
             android:gravity="top"
             android:nestedScrollingEnabled="true"
             android:tag="EditText"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
