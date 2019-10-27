@@ -61,6 +61,10 @@ public class TeacherLocationDatabase {
         return getInstance().getDetailHash().size();
     }
 
+    public static int getOccupiedTeacherCount(int key) {
+        return getInstance().getOccupiedDetailHash(key).size();
+    }
+
     public static int getNewTeacherID() {
         HashMap<Integer, TeacherDetail> detailMap = getInstance().getDetailHash();
         int size = detailMap.size();
@@ -371,6 +375,28 @@ public class TeacherLocationDatabase {
 
     public ArrayList<TeacherDetail> getDetailList() {
         HashMap<Integer, TeacherDetail> data = getDetailHash();
+        ArrayList<TeacherDetail> list = new ArrayList<>(data.values());
+        Collections.sort(list, new Comparator<TeacherDetail>() {
+            @Override
+            public int compare(TeacherDetail detail1, TeacherDetail detail2) {
+                int value = detail1.name.compareTo(detail2.name);
+                return (value != 0) ? value : detail1.surname.compareTo(detail2.surname);
+            }
+        });
+        return list;
+    }
+
+    public HashMap<Integer, TeacherDetail> getOccupiedDetailHash(int key) {
+        HashMap<Integer, TeacherDetail> hash = new HashMap<>();
+        for (TeacherDetail detail : getInstance().getDetailHash().values())
+            if (getInstance().getLocationDataAt(detail.id, key) != null) {
+                hash.put(detail.id,detail);
+            }
+        return hash;
+    }
+
+    public ArrayList<TeacherDetail> getOccupiedDetailList(int key) {
+        HashMap<Integer, TeacherDetail> data = getOccupiedDetailHash(key);
         ArrayList<TeacherDetail> list = new ArrayList<>(data.values());
         Collections.sort(list, new Comparator<TeacherDetail>() {
             @Override

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -42,7 +43,6 @@ public class TeacherLocationDisplayFragment extends Fragment {
 
     public class TeacherListAdapter extends RecyclerView.Adapter<TeacherDataViewHolder> {
 
-
         @NonNull
         @Override
         public TeacherDataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int type) {
@@ -52,7 +52,8 @@ public class TeacherLocationDisplayFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull TeacherDataViewHolder holder, int pos) {
-            TeacherDetail teacherDetail = TeacherLocationDatabase.getInstance().getDetailList().get(pos);
+            TeacherDetail teacherDetail = DataSaveHandler.SharedPreferencesHelper.getBoolean("settings_hide_no_class") ?
+                    TeacherLocationDatabase.getInstance().getOccupiedDetailList(key).get(pos) : TeacherLocationDatabase.getInstance().getDetailList().get(pos);
             holder.teacher.setText(String.format(Locale.getDefault(), "อ. %s", teacherDetail.name));
             holder.v.setBackgroundColor(getResources().getColor(
                     pos % 2 == 0 ? R.color.colorBackground : R.color.colorBackgroundTint));
@@ -66,14 +67,14 @@ public class TeacherLocationDisplayFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return TeacherLocationDatabase.getTeacherCount();
+            return DataSaveHandler.SharedPreferencesHelper.getBoolean("settings_hide_no_class") ?
+                    TeacherLocationDatabase.getOccupiedTeacherCount(key) : TeacherLocationDatabase.getTeacherCount();
         }
 
         @Override
         public void onViewAttachedToWindow(@NonNull TeacherDataViewHolder holder) {
             super.onViewAttachedToWindow(holder);
-            rv.setBackgroundColor(getResources().getColor(
-                    TeacherLocationDatabase.getTeacherCount() % 2 == 0 ?
+            rv.setBackgroundColor(getResources().getColor(getItemCount() % 2 == 0 ?
                             R.color.colorBackground : R.color.colorBackgroundTint));
         }
     }
