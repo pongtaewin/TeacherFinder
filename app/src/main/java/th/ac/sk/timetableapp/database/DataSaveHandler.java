@@ -1,7 +1,5 @@
 package th.ac.sk.timetableapp.database;
 
-import androidx.annotation.NonNull;
-
 import java.util.HashMap;
 
 import th.ac.sk.timetableapp.model.Period;
@@ -16,12 +14,10 @@ public class DataSaveHandler {
     private static final String DATA_PERIOD = "periodData";
     private static DataSaveHandler ourInstance;
 
-    @NonNull
-    public static DataSaveHandler getInstance() {
+    public static void getInstance() {
         if (ourInstance == null) {
             ourInstance = new DataSaveHandler();
         }
-        return ourInstance;
     }
 
     ///////////////////////////////////////////////////
@@ -48,15 +44,15 @@ public class DataSaveHandler {
         return DataParser.parsePeriod(data);
     }
 
-    public static void loadCurrentPeriodData() {
+    private static void loadCurrentPeriodData() {
         HashMap<Integer,Period> loadedData = loadPeriod();
 
-        if (loadedData != null) PeriodDatabase.getInstance().putPeriod(loadedData);
+        if (loadedData != null) PeriodDatabase.getInstance().putPeriodHash(loadedData);
         else PeriodDatabase.getInstance().updateToNullPeriod();
     }
 
     public static void saveCurrentPeriodData() {
-        savePeriod(PeriodDatabase.getInstance().getPeriod());
+        savePeriod(PeriodDatabase.getInstance().getPeriodHash());
     }
 
     public static boolean importPeriodData(String saveData, boolean apply) {
@@ -100,18 +96,18 @@ public class DataSaveHandler {
         SharedPreferencesHelper.set(saveData, DATA_TEACHER_LOCATION);
     }
     
-    public static void loadCurrentTeacherLocationData() {
+    private static void loadCurrentTeacherLocationData() {
         DataParser.TeacherLocationDatabaseFormat loadedData = loadTeacherLocation();
         if (loadedData != null) {
             if (loadedData.getTeacherDetail() != null)
-                TeacherLocationDatabase.getInstance().putDetail(loadedData.getTeacherDetail());
+                TeacherLocationDatabase.getInstance().putDetailHash(loadedData.getTeacherDetail());
             if (loadedData.getTeacherLocation() != null)
-                TeacherLocationDatabase.getInstance().putLocation(loadedData.getTeacherLocation());
+                TeacherLocationDatabase.getInstance().putLocationHash(loadedData.getTeacherLocation());
         }
     }
 
     public static void saveCurrentTeacherLocationData() {
-        saveTeacherLocation(TeacherLocationDatabase.getInstance().getLocation(), TeacherLocationDatabase.getInstance().getDetail());
+        saveTeacherLocation(TeacherLocationDatabase.getInstance().getLocationHash(), TeacherLocationDatabase.getInstance().getDetailHash());
     }
 
 

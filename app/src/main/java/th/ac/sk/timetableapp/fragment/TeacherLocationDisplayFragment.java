@@ -52,12 +52,12 @@ public class TeacherLocationDisplayFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull TeacherDataViewHolder holder, int pos) {
-            TeacherDetail teacherDetail = TeacherLocationDatabase.getInstance().getDetailAt(pos);
+            TeacherDetail teacherDetail = TeacherLocationDatabase.getInstance().getDetailList().get(pos);
             holder.teacher.setText(String.format(Locale.getDefault(), "อ. %s", teacherDetail.name));
             holder.v.setBackgroundColor(getResources().getColor(
                     pos % 2 == 0 ? R.color.colorBackground : R.color.colorBackgroundTint));
 
-            TeacherLocation teacherLocation = TeacherLocationDatabase.getInstance().getLocation(teacherDetail.id, key);
+            TeacherLocation teacherLocation = TeacherLocationDatabase.getInstance().getLocationDataAt(teacherDetail.id, key);
             holder.status.setText(teacherLocation != null ?
                     String.format(Locale.getDefault(), "สอนที่ห้อง %s (%s)",
                             teacherLocation.classroom, teacherLocation.location) : "ว่าง");
@@ -79,9 +79,9 @@ public class TeacherLocationDisplayFragment extends Fragment {
     }
 
     class TeacherDataViewHolder extends RecyclerView.ViewHolder {
-        TextView teacher;
-        TextView status;
-        View v;
+        final TextView teacher;
+        final TextView status;
+        final View v;
 
         TeacherDataViewHolder(@NonNull View v) {
             super(v);

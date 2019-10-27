@@ -20,7 +20,7 @@ import th.ac.sk.timetableapp.model.TeacherDetail;
 public class StaticUtil {
 
     public static SharedPreferences preferences;
-    public static StaticUtil ourInstance;
+    private static StaticUtil ourInstance;
     public static Resources resources;
     public static File filesDir;
 
@@ -55,7 +55,7 @@ public class StaticUtil {
                 case R.id.modifyTeacherLocationChooserFragment:
                     return "รายชื่อครู";
                 case R.id.modifyTeacherLocationEditorFragment:
-                    TeacherDetail detail = TeacherLocationDatabase.getInstance().getDetail(arguments.getInt("teacherId"));
+                    TeacherDetail detail = TeacherLocationDatabase.getInstance().getDetailAt(arguments.getInt("teacherId"));
                     return String.format("แก้ไข | อ. %s %s", detail.name, detail.surname);
                 case R.id.importCheckFragment:
                     return "ตรวจสอบข้อมูลนำเข้า";

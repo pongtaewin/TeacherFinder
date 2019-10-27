@@ -26,7 +26,7 @@ import th.ac.sk.timetableapp.model.TeacherDetail;
 import th.ac.sk.timetableapp.tool.DialogBuilder;
 
 public class ModifyTeacherLocationChooserFragment extends Fragment {
-    public TeacherChooserAdapter adapter = new TeacherChooserAdapter(this);
+    private final TeacherChooserAdapter adapter = new TeacherChooserAdapter(this);
     private RecyclerView rv;
     private ExtendedFloatingActionButton addFab;
 
@@ -85,7 +85,7 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
 
     private static class TeacherListener {
         private static class Click implements View.OnClickListener {
-            int teacherId;
+            final int teacherId;
 
             Click(int teacherId) {
                 this.teacherId = teacherId;
@@ -99,8 +99,8 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
         }
 
         private static class LongClick implements View.OnLongClickListener {
-            int teacherId;
-            ModifyTeacherLocationChooserFragment fragment;
+            final int teacherId;
+            final ModifyTeacherLocationChooserFragment fragment;
 
             LongClick(int teacherId, ModifyTeacherLocationChooserFragment fragment) {
                 this.teacherId = teacherId;
@@ -109,15 +109,15 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
 
             @Override
             public boolean onLongClick(View v) {
-                DialogBuilder.getDeleteItemDialog(fragment, TeacherLocationDatabase.getInstance().getDetail(teacherId)).show();
+                DialogBuilder.getDeleteItemDialog(fragment, TeacherLocationDatabase.getInstance().getDetailAt(teacherId)).show();
                 return false;
             }
         }
     }
 
     private class TeacherChooserViewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        public TextView text;
+        final View view;
+        final TextView text;
 
         private TeacherChooserViewHolder(@NonNull View v) {
             super(v);
@@ -126,8 +126,8 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
         }
     }
 
-    public class TeacherChooserAdapter extends RecyclerView.Adapter {
-        public ModifyTeacherLocationChooserFragment fragment;
+    class TeacherChooserAdapter extends RecyclerView.Adapter {
+        final ModifyTeacherLocationChooserFragment fragment;
 
         TeacherChooserAdapter(ModifyTeacherLocationChooserFragment fragment) {
             this.fragment = fragment;
@@ -143,7 +143,7 @@ public class ModifyTeacherLocationChooserFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int pos) {
             TeacherChooserViewHolder VH = (TeacherChooserViewHolder) holder;
-            TeacherDetail data = TeacherLocationDatabase.getInstance().getDetailAt(pos);
+            TeacherDetail data = TeacherLocationDatabase.getInstance().getDetailList().get(pos);
             VH.text.setText(String.format(Locale.getDefault(), "อ. %s %s", data.name, data.surname));
 
             VH.view.setBackgroundColor(getResources().getColor(

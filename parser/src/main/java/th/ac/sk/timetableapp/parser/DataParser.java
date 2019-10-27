@@ -28,10 +28,7 @@ public class DataParser {
         try {
             if (data == null) return null;
             return parsePeriod(Objects.requireNonNull(new Gson().fromJson(data, JsonArray.class)));
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-            return null;
-        } catch (NullPointerException e) {
+        } catch (JsonParseException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }
@@ -60,10 +57,7 @@ public class DataParser {
                 jsonArray.add(obj);
             }
             return new Gson().toJson(jsonArray);
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-            return null;
-        } catch (NullPointerException e) {
+        } catch (JsonParseException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }
@@ -76,10 +70,7 @@ public class DataParser {
         try {
             if (data == null) return null;
             return parseTeacherLocation(new Gson().fromJson(data, JsonObject.class));
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-            return null;
-        } catch (NullPointerException e) {
+        } catch (JsonParseException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }
@@ -96,10 +87,7 @@ public class DataParser {
     public static String extractTeacherLocation(HashMap<Integer, HashMap<Integer, TeacherLocation>> location, HashMap<Integer, TeacherDetail> detail) {
         try {
             return extractTeacherLocation(parseTeacherLocationToJson(location), parseTeacherDetailToJson(detail));
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-            return null;
-        } catch (NullPointerException e) {
+        } catch (JsonParseException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }

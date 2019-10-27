@@ -5,10 +5,10 @@ import androidx.annotation.NonNull;
 import com.google.gson.JsonObject;
 
 public class TeacherLocation implements Comparable<TeacherLocation> {
-    public int teacherId;
-    public String classroom = null;
-    public String location = null;
-    public int key;
+    private final int teacherId;
+    public final String classroom;
+    public final String location;
+    public final int key;
 
     public TeacherLocation(int teacherId, @NonNull String classroom, @NonNull String location, int key) {
         this.teacherId = teacherId;

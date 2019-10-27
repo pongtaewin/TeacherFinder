@@ -75,7 +75,7 @@ public class ModifyClassroomFragment extends Fragment {
     }
 
     private static void updateData(Period period, int position) {
-        PeriodDatabase.getInstance().putPeriod(position, period);
+        PeriodDatabase.getInstance().putPeriodAt(position, period);
         DataSaveHandler.saveMaster();
     }
 
@@ -87,7 +87,7 @@ public class ModifyClassroomFragment extends Fragment {
             header.type = ModifyClassroomData.VIEW_TYPE_HEADER;
             input.add(header);
             for (int i = 0; i < 10; i++) {
-                Period period = PeriodDatabase.getInstance().getPeriod().get((day * 10) + i);
+                Period period = PeriodDatabase.getInstance().getPeriodAt((day * 10) + i);
                 Objects.requireNonNull(period);
                 if (period.type == Period.Type.HAVE_CLASS) {
                     ModifyClassroomData display = new ModifyClassroomData(d[day]);
@@ -135,7 +135,7 @@ public class ModifyClassroomFragment extends Fragment {
 
     private static class ModifyClassroomViewHolder {
         static class Header extends RecyclerView.ViewHolder {
-            TextView banner;
+            final TextView banner;
 
             Header(@NonNull View v) {
                 super(v);
@@ -163,15 +163,15 @@ public class ModifyClassroomFragment extends Fragment {
         }
 
         static class Edit extends RecyclerView.ViewHolder {
-            TextView periodTV;
-            TextInputEditText subjectET;
-            TextInputEditText subjectCodeET;
-            TextInputEditText teacherListET;
-            TextInputEditText roomET;
-            MaterialButton submitBtn;
-            MaterialButton toggleBtn;
+            final TextView periodTV;
+            final TextInputEditText subjectET;
+            final TextInputEditText subjectCodeET;
+            final TextInputEditText teacherListET;
+            final TextInputEditText roomET;
+            final MaterialButton submitBtn;
+            final MaterialButton toggleBtn;
             Period backupPeriod;
-            TextView errorMessage;
+            final TextView errorMessage;
 
             Edit(@NonNull View v) {
                 super(v);
@@ -226,14 +226,14 @@ public class ModifyClassroomFragment extends Fragment {
         }
 
         static class EditNull extends RecyclerView.ViewHolder {
-            TextView periodTV;
-            RadioGroup chooser;
-            RadioButton choose1;
-            RadioButton choose2;
-            RadioButton choose3;
-            RadioButton choose4;
-            MaterialButton submitBtn;
-            MaterialButton toggleBtn;
+            final TextView periodTV;
+            final RadioGroup chooser;
+            final RadioButton choose1;
+            final RadioButton choose2;
+            final RadioButton choose3;
+            final RadioButton choose4;
+            final MaterialButton submitBtn;
+            final MaterialButton toggleBtn;
             Period backupPeriod;
 
             EditNull(@NonNull View v) {
@@ -283,10 +283,10 @@ public class ModifyClassroomFragment extends Fragment {
         }
 
         static class Display extends RecyclerView.ViewHolder {
-            TextView periodTV;
-            TextView line1TV;
-            TextView line2TV;
-            ImageView icBtn;
+            final TextView periodTV;
+            final TextView line1TV;
+            final TextView line2TV;
+            final ImageView icBtn;
             Period period;
 
             Display(@NonNull View v) {
@@ -312,9 +312,9 @@ public class ModifyClassroomFragment extends Fragment {
         }
 
         static class DisplayNull extends RecyclerView.ViewHolder {
-            TextView periodTV;
-            TextView descTV;
-            ImageView icBtn;
+            final TextView periodTV;
+            final TextView descTV;
+            final ImageView icBtn;
             Period period;
 
             DisplayNull(@NonNull View v) {
@@ -354,7 +354,7 @@ public class ModifyClassroomFragment extends Fragment {
         Period period;
         int position;
         int displayPosition;
-        int day;
+        final int day;
         int type;
 
         ModifyClassroomData(int day) {

@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import th.ac.sk.timetableapp.model.Period;
 
@@ -43,12 +42,12 @@ public class PeriodDatabase {
         return ourInstance;
     }
 
-    public void updateToNullPeriod() {
+    void updateToNullPeriod() {
         Log.d(TAG, "updateToNullDetail() called");
-        removePeriod();
+        removePeriodHash();
     }
 
-    public void updateToPlaceholderPeriod() {
+    void updateToPlaceholderPeriod() {
         Log.d(TAG, "updateToPlaceholderDetail() called");
         updateToNullPeriod();
         HashMap<Integer, Period> data = new HashMap<>();
@@ -105,24 +104,31 @@ public class PeriodDatabase {
         periodDatabase.setValue(data);
     }
 
-    public HashMap<Integer, Period> getPeriod() {
+    private HashMap<Integer,Period> createEmptyPeriodHash(){
+        HashMap<Integer,Period> empty = new HashMap<>();
+        for (int i = 0; i < 50; i++) empty.put(i, new Period(NO_CLASS, (i % 10) + 1));
+        return empty;
+    }
+    public HashMap<Integer, Period> getPeriodHash() {
         return periodDatabase.getValue();
     }
 
-    public void putPeriod(HashMap<Integer, Period> data) {
+    public Period getPeriodAt(int key){
+        return getPeriodHash().get(key);
+    }
+
+    void putPeriodHash(HashMap<Integer, Period> data) {
         periodDatabase.setValue(data);
     }
 
-    public void putPeriod(int position, Period data) {
-        HashMap<Integer, Period> parentData = getPeriod();
+    public void putPeriodAt(int position, Period data) {
+        HashMap<Integer, Period> parentData = getPeriodHash();
         parentData.put(position, data);
-        putPeriod(parentData);
+        putPeriodHash(parentData);
     }
 
-    public void removePeriod() {
-        HashMap<Integer, Period> data = new HashMap<>();
-        for (int i = 0; i < 50; i++) data.put(i, new Period(NO_CLASS, (i % 10) + 1));
-        putPeriod(data);
+    private void removePeriodHash() {
+        putPeriodHash(createEmptyPeriodHash());
     }
 
     public void setObserver(LifecycleOwner owner, Observer<? super HashMap<Integer, Period>> observer) {

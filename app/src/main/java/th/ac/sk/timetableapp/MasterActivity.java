@@ -27,18 +27,18 @@ import th.ac.sk.timetableapp.tool.StaticUtil;
 
 public class MasterActivity extends AppCompatActivity {
 
-    public static final String SPLASH_SCREEN_ALREADY = "splashScreenAlready";
+    private static final String SPLASH_SCREEN_ALREADY = "splashScreenAlready";
     public static final int REQUEST_IMPORT = 99;
     public static final int RESULT_IMPORT_SUCCESS = 138;
     public static final int RESULT_IMPORT_FAIL = 934;
-    public static boolean showImportSuccessText = false;
-    public static boolean hideSettings = false;
-    public NavController navController;
-    public ActionBar actionBar;
+    private static boolean showImportSuccessText = false;
+    private static boolean hideSettings = false;
+    private NavController navController;
+    private ActionBar actionBar;
     private int currentDestinationId = -1;
     private int previousDestinationId = -1;
 
-    NavController.OnDestinationChangedListener listener = new NavController.OnDestinationChangedListener() {
+    private final NavController.OnDestinationChangedListener listener = new NavController.OnDestinationChangedListener() {
         @Override
         public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
             currentDestinationId = Objects.requireNonNull(navController.getCurrentDestination()).getId();
@@ -131,16 +131,11 @@ public class MasterActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onNavigateUp() {
-        return super.onNavigateUp();
-    }
-
-    @Override
     public boolean onNavigateUpFromChild(Activity child) {
         return super.onNavigateUpFromChild(child);
     }
 
-    public void handleIntent(Intent intent) {
+    private void handleIntent(Intent intent) {
         String action = intent.getAction();
         if (Objects.equals(action, Intent.ACTION_VIEW)) {
             Bundle args = new Bundle();

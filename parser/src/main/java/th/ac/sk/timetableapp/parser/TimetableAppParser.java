@@ -10,7 +10,7 @@ import th.ac.sk.timetableapp.model.TeacherDetail;
 import th.ac.sk.timetableapp.model.TeacherLocation;
 
 @SuppressLint("UseSparseArrays")
-public class TimetableAppParser {
+class TimetableAppParser {
     public static void main(String[] args) {
         HashMap<Integer, Period> period = generatePeriod(602, null);
         HashMap<Integer, HashMap<Integer, TeacherLocation>> location = new HashMap<>();
@@ -19,7 +19,7 @@ public class TimetableAppParser {
         System.out.println(DataPackager.pack("ทดสอบ", s));
     }
 
-    public static HashMap<Integer, Period> generatePeriod(int roomKey, Bundle extra) {
+    private static HashMap<Integer, Period> generatePeriod(int roomKey, Bundle extra) {
         HashMap<Integer, Period> data = new HashMap<>();
 
         // 605 - jp-fr  !!! 1=jp 2=fr 0=nothing

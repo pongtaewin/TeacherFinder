@@ -3,9 +3,9 @@ package th.ac.sk.timetableapp.model;
 import com.google.gson.JsonObject;
 
 public class TeacherDetail implements Comparable<TeacherDetail> {
-    public int id;
-    public String name;
-    public String surname;
+    public final int id;
+    public final String name;
+    public final String surname;
 
     public TeacherDetail(int id, String name, String surname) {
         this.id=id;

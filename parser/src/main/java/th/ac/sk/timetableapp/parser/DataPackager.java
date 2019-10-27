@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 import java.util.Calendar;
 
 class DataPackager {
-    static String pack(String prefix, String data) {
+    static String pack(@SuppressWarnings("SameParameterValue") String prefix, String data) {
         JsonObject obj = new JsonObject();
         obj.addProperty("p", prefix);
         obj.add("d", new JsonParser().parse(data));

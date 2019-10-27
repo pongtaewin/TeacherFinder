@@ -2,7 +2,6 @@ package th.ac.sk.timetableapp.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
 import th.ac.sk.timetableapp.database.TeacherLocationDatabase;
-import th.ac.sk.timetableapp.model.TeacherDetail;
 import th.ac.sk.timetableapp.model.TeacherLocation;
 import th.ac.sk.timetableapp.tool.StaticUtil;
 
@@ -45,7 +43,7 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
             input.add(header);
             for (int i = 0; i < 10; i++) {
                 int key = (day * 10) + i;
-                TeacherLocation teacherLocation = TeacherLocationDatabase.getInstance().getLocation(teacherId, key);
+                TeacherLocation teacherLocation = TeacherLocationDatabase.getInstance().getLocationDataAt(teacherId, key);
                 if (teacherLocation == null) {
                     teacherLocation = new TeacherLocation(teacherId, key);
                 } else {
@@ -74,9 +72,9 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
 
     private static void updateData(TeacherLocation location, int position) {
         if (location == null)
-            TeacherLocationDatabase.getInstance().removeLocation(teacherId, position);
+            TeacherLocationDatabase.getInstance().removeLocationDataAt(teacherId, position);
         else
-            TeacherLocationDatabase.getInstance().putLocation(teacherId, position, location);
+            TeacherLocationDatabase.getInstance().putLocationDataAt(teacherId, position, location);
         DataSaveHandler.saveMaster();
     }
 
@@ -90,7 +88,7 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
         rv.scrollToPosition(data.displayPosition);
     }
 
-    public static ModifyTeacherLocationAdapter getAdapter() {
+    private static ModifyTeacherLocationAdapter getAdapter() {
         return adapter;
     }
 
@@ -121,7 +119,7 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
 
     static class ModifyTeacherLocationViewHolder {
         static class Header extends RecyclerView.ViewHolder {
-            TextView banner;
+            final TextView banner;
 
             Header(@NonNull View v) {
                 super(v);
@@ -149,9 +147,9 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
         }
 
         static class Display extends RecyclerView.ViewHolder {
-            TextView periodTV;
-            TextView statusTV;
-            ImageView icBtn;
+            final TextView periodTV;
+            final TextView statusTV;
+            final ImageView icBtn;
             TeacherLocation location;
 
 
@@ -179,11 +177,11 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
         }
 
         static class Edit extends RecyclerView.ViewHolder {
-            TextView periodTV;
-            TextInputEditText classroomET;
-            TextInputEditText locationET;
-            MaterialButton submitBtn;
-            MaterialButton toggleBtn;
+            final TextView periodTV;
+            final TextInputEditText classroomET;
+            final TextInputEditText locationET;
+            final MaterialButton submitBtn;
+            final MaterialButton toggleBtn;
             TeacherLocation location;
 
             Edit(View v) {
@@ -234,7 +232,7 @@ public class ModifyTeacherLocationEditorFragment extends Fragment {
         TeacherLocation location;
         int position;
         int displayPosition;
-        int day;
+        final int day;
         int type;
 
         ModifyTeacherLocationData(int day) {

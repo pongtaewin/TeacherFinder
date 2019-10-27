@@ -39,7 +39,7 @@ public class Period {
         this.room = room;
     }
 
-    public void setPeriodNum(int periodNum) {
+    private void setPeriodNum(int periodNum) {
         this.periodNum = periodNum;
     }
 

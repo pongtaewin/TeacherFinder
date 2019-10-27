@@ -146,7 +146,7 @@ public abstract class DialogBuilder {
                     public void onClick(DialogInterface dialog, int which) {
                         DataSaveHandler.loadMaster();
                         int id = TeacherLocationDatabase.getNewTeacherID();
-                        TeacherLocationDatabase.getInstance().putDetail(id, new TeacherDetail(id,
+                        TeacherLocationDatabase.getInstance().putDetailAt(id, new TeacherDetail(id,
                                 Objects.requireNonNull(text.getText()).toString(), Objects.requireNonNull(text2.getText()).toString()));
                         DataSaveHandler.saveMaster();
                         ModifyTeacherLocationChooserFragment.openEditor(navController, id);
@@ -168,8 +168,8 @@ public abstract class DialogBuilder {
                 .setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        TeacherLocationDatabase.getInstance().removeLocation(detail.id);
-                        TeacherLocationDatabase.getInstance().removeDetail(detail.id);
+                        TeacherLocationDatabase.getInstance().removeLocationHashAt(detail.id);
+                        TeacherLocationDatabase.getInstance().removeDetailAt(detail.id);
                         Snackbar.make(fragment.requireView(), "ลบข้อมูลสำเร็จ", Snackbar.LENGTH_LONG).show();
                     }
                 })

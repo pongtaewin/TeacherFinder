@@ -1,7 +1,6 @@
 package th.ac.sk.timetableapp.fragment;
 
 import android.os.Bundle;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import th.ac.sk.timetableapp.R;
 import th.ac.sk.timetableapp.database.DataSaveHandler;
@@ -34,7 +32,7 @@ public class PeriodDisplayFragment extends Fragment {
 
     private static void importData(@IntRange(from = 1, to = 5) int day) {
         if (day < 0 || day > 5) throw new IllegalArgumentException("day");
-        HashMap<Integer,Period> data = PeriodDatabase.getInstance().getPeriod();
+        HashMap<Integer,Period> data = PeriodDatabase.getInstance().getPeriodHash();
         ArrayList<Period> result = new ArrayList<>();
         for (int i = 0; i < 10; i++) result.add(data.get((10 * (day - 1) + i)));
         dataList = result;
@@ -116,18 +114,18 @@ public class PeriodDisplayFragment extends Fragment {
     }
 
     class PeriodDisplayViewHolder extends RecyclerView.ViewHolder {
-        TextView dayTag;
-        TextView periodNum;
-        TextView subject;
-        TextView subjectCode;
-        TextView teacherList;
-        TextView room;
+        final TextView dayTag;
+        final TextView periodNum;
+        final TextView subject;
+        final TextView subjectCode;
+        final TextView teacherList;
+        final TextView room;
 
-        TextView dataNormal;
-        TextView dataReduced;
-        Group group;
-        ConstraintLayout banner;
-        View v;
+        final TextView dataNormal;
+        final TextView dataReduced;
+        final Group group;
+        final ConstraintLayout banner;
+        final View v;
 
         PeriodDisplayViewHolder(@NonNull View v) {
             super(v);
