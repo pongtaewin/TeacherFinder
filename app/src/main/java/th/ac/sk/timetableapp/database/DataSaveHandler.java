@@ -1,5 +1,7 @@
 package th.ac.sk.timetableapp.database;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
 import th.ac.sk.timetableapp.model.Period;
@@ -8,10 +10,12 @@ import th.ac.sk.timetableapp.model.TeacherLocation;
 import th.ac.sk.timetableapp.parser.DataParser;
 import th.ac.sk.timetableapp.tool.StaticUtil;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 
 public class DataSaveHandler {
-    private static final String DATA_TEACHER_LOCATION = "teacherLocation";
-    private static final String DATA_PERIOD = "periodData";
+    private static final String DATA_SETTINGS = "settings";
+
     private static DataSaveHandler ourInstance;
 
     public static void getInstance() {
@@ -24,28 +28,28 @@ public class DataSaveHandler {
     //                    PERIOD                     //
     ///////////////////////////////////////////////////
 
-    private static void savePeriod(HashMap<Integer,Period> data) {
+    private static void savePeriod(HashMap<Integer, Period> data) {
         savePeriod(DataParser.extractPeriod(data));
     }
 
     private static void savePeriod(String saveData) {
-        SharedPreferencesHelper.set(saveData, DATA_PERIOD);
+        SharedPreferencesHelper.setString(saveData, "periodData");
     }
 
-    private static HashMap<Integer,Period> loadPeriod() {
+    private static HashMap<Integer, Period> loadPeriod() {
         return DataParser.parsePeriod(getPeriod());
     }
 
     public static String getPeriod() {
-        return SharedPreferencesHelper.get(DATA_PERIOD);
+        return SharedPreferencesHelper.getString("periodData");
     }
 
-    private static HashMap<Integer,Period> loadPeriod(String data) {
+    private static HashMap<Integer, Period> loadPeriod(String data) {
         return DataParser.parsePeriod(data);
     }
 
     private static void loadCurrentPeriodData() {
-        HashMap<Integer,Period> loadedData = loadPeriod();
+        HashMap<Integer, Period> loadedData = loadPeriod();
 
         if (loadedData != null) PeriodDatabase.getInstance().putPeriodHash(loadedData);
         else PeriodDatabase.getInstance().updateToNullPeriod();
@@ -88,14 +92,14 @@ public class DataSaveHandler {
         return DataParser.parseTeacherLocation(data);
     }
 
-    private static void saveTeacherLocation(HashMap<Integer,HashMap<Integer,TeacherLocation>> location, HashMap<Integer,TeacherDetail> detail) {
+    private static void saveTeacherLocation(HashMap<Integer, HashMap<Integer, TeacherLocation>> location, HashMap<Integer, TeacherDetail> detail) {
         saveTeacherLocation(DataParser.extractTeacherLocation(location, detail));
     }
 
     private static void saveTeacherLocation(String saveData) {
-        SharedPreferencesHelper.set(saveData, DATA_TEACHER_LOCATION);
+        SharedPreferencesHelper.setString(saveData, "teacherLocation");
     }
-    
+
     private static void loadCurrentTeacherLocationData() {
         DataParser.TeacherLocationDatabaseFormat loadedData = loadTeacherLocation();
         if (loadedData != null) {
@@ -112,7 +116,7 @@ public class DataSaveHandler {
 
 
     public static String getTeacherLocation() {
-        return SharedPreferencesHelper.get(DATA_TEACHER_LOCATION);
+        return SharedPreferencesHelper.getString("teacherLocation");
     }
 
     public static boolean importTeacherLocationData(String saveData, boolean apply) {
@@ -129,25 +133,57 @@ public class DataSaveHandler {
         return success;
     }
 
+    ///////////////////////////////////////////////////
+    //                    SETTINGS                   //
+    ///////////////////////////////////////////////////
+
+    private static void loadCurrentSettingsData() {
+
+    }
+
+    public static void saveCurrentSettingsData() {
+
+    }
+
     public static void loadMaster() {
         loadCurrentPeriodData();
         loadCurrentTeacherLocationData();
+        loadCurrentSettingsData();
     }
 
     public static void saveMaster() {
         saveCurrentPeriodData();
         saveCurrentTeacherLocationData();
+        saveCurrentSettingsData();
     }
 
-    static class SharedPreferencesHelper {
-        static void set(String saveData, String path) {
+    public static class SharedPreferencesHelper {
+        public static void setString(String saveData, String path) {
             StaticUtil.preferences.edit()
                     .putString(path, saveData)
                     .apply();
         }
-
-        static String get(String path) {
+        public static void setInt(int saveData, String path) {
+            StaticUtil.preferences.edit()
+                    .putInt(path, saveData)
+                    .apply();
+        }
+        public static void setBoolean(boolean saveData, String path) {
+            StaticUtil.preferences.edit()
+                    .putBoolean(path, saveData)
+                    .apply();
+            Log.w("DSH", "setBoolean(hide) set to: " + saveData);
+        }
+        public static String getString(String path) {
             return StaticUtil.preferences.getString(path, "");
+        }
+        public static int getInt(String path) {
+            return StaticUtil.preferences.getInt(path, 0);
+        }
+        public static boolean getBoolean(String path) {
+            boolean res = StaticUtil.preferences.getBoolean(path, false);
+            Log.w("DSH", "getBoolean(hide) returned: " + res);
+            return res;
         }
     }
 }
